@@ -1,0 +1,82 @@
+﻿@model ELIMS_MVC.Models.ContactTopicViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-controller="ContactForms" asp-action="Index" method="get">
+    <p> Last Name: <input type="text" name="search" />
+
+    <select asp-for="EntryTopic" asp-items="Model.Topics">
+        <option value=" ">All</option>
+    </select>
+    <input type="submit" value="Filter" />
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].ContactDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].NAUEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].Topic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactForms[0].Message)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ContactForms) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAUEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Topic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

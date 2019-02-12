@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAOf9SsnVoHUScFRMp2DZsUAAAAAACAAAAAAAQZgAAAAEAACAAAAAwW/eXNF7lrVN3jzujoxgI1wv8u8yUmCm1SGn00dM2UwAAAAAOgAAAAAIAACAAAABjgXqP5GRMeFSub+myI6QE0WZPmYNASXXRZ9zymxv414AAAADMP+6hVksR9UKYicElihhS2rKxxXRD32ty51pOvgyoTBVffAYzptin2m4sFHnmMLHou0h59NgrHJoxFzQLNpp5xBxuBOyL8x/eNB8OONl3DJvJ26sy65xLO8J9DHWQY+fzuet42YGKoeJjkXwu7dZy/yLV8xoVSTDvn5yz53jRsEAAAADVsP30c9iyssSNY0DukczYUQLO7UXoBP0j7Vp/crWGCQtdzRIrNr2TYApF7wORJW0FzTJBu3892A7RV2YgFVpH</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="ELIMS_MVCContext">
+      <Value>Server=tcp:elims-sql-server.database.windows.net,1433%3bInitial Catalog=ELIMS_DB%3bPersist Security Info=False%3bUser ID=labrats%3bPassword=CS486capstone%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

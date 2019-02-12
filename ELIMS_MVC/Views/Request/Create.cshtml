@@ -1,0 +1,134 @@
+﻿@model ELIMS_MVC.Models.Request
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create New Request for ENE Lab Usage</h2>
+
+<p>Use this form to submit your lab usage request. Please make sure to correctly fill in all fields correctly, and include any relevant information you think we may need to know. This form will be reviewed by Lab Management, who will contact you to set up a face-to-face meeting to discuss your project's needs.</p>
+<p>Make sure to submit the form <u>NO LESS than 2 weeks PRIOR to the project's intended start date.</u></p>
+
+<fieldset id="requestform" style="display:block">
+    <legend><b>Request Form</b></legend>
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create">
+                <h3>Your Information</h3>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label">User ID (ex: 1234567)</label>
+                    <input asp-for="UserId" class="form-control" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NAUEmail" class="control-label">NAU Email</label>
+                    <input asp-for="NAUEmail" class="form-control" />                        
+                    <span asp-validation-for="NAUEmail" class="text-danger"></span>
+                </div>
+                <br />
+                <h3>Project Information</h3>
+                <div class="form-group">
+                    <label asp-for="ProjectName" class="control-label">Project Name</label>
+                    <input asp-for="ProjectName" class="form-control" />
+                    <span asp-validation-for="ProjectName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProjectObjective" class="control-label">Project Objective</label>
+                    <input asp-for="ProjectObjective" class="form-control" />
+                    <span asp-validation-for="ProjectObjective" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"> Start Date</label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label">End Date</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="ContactName" class="control-label">Primary Contact</label>
+                    <input asp-for="ContactName" class="form-control" />
+                    <span asp-validation-for="ContactName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactID" class="control-label">NAU ID (ex: 1234567)</label>
+                    <input asp-for="ContactID" class="form-control" />
+                    <span asp-validation-for="ContactID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funding" class="control-label">Source of Project Funding or Name of Course</label>
+                    <input asp-for="Funding" class="form-control" />
+                    <span asp-validation-for="Funding" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SponsorName" class="control-label">Faculty Sponsor or Course Instructor Name</label>
+                    <input asp-for="SponsorName" class="form-control" />
+                    <span asp-validation-for="SponsorName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SponsorPhone" class="control-label">Sponsor Phone</label>
+                    <input asp-for="SponsorPhone" class="form-control" />
+                    <span asp-validation-for="SponsorPhone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SponsorEmail" class="control-label">Sponsor Email</label>
+                    <input asp-for="SponsorEmail" class="form-control" />
+                    <span asp-validation-for="SponsorEmail" class="text-danger"></span>
+                </div>
+                <br />
+                <p>If you know what chemicals your project will be using, list them here.</p>
+                <div class="form-group">
+                    <label asp-for="Chemicals" class="control-label">Chemicals Used</label>
+                    <textarea asp-for="Chemicals" class="form-control" id="Chemicals"></textarea>                    
+                    <span asp-validation-for="Chemicals" class="text-danger"></span>
+                </div>
+                <br />
+                <p>You will need to meet face-to-face with Lab Management for your request to be approved. What are some good times before the start of your project that you can meet?</p>
+                <div class="form-group">
+                    <label asp-for="MeetingTimes" class="control-label">Potential Meeting Times</label>
+                    <textarea asp-for="MeetingTimes" class="form-control" id="MeetingTimes"></textarea>                    
+                    <span asp-validation-for="MeetingTimes" class="text-danger"></span>
+                </div>
+                <br />
+                <p>Please list all people who will be working on the project and will need lab access (names and NAU IDs).</p>
+                <div class="form-group">
+                    <label asp-for="GroupMembers" class="control-label">Group Members</label>
+                    <textarea asp-for="GroupMembers" class="form-control" id="GroupMembers"></textarea>
+                    <span asp-validation-for="GroupMembers" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="ProjectFile" class="control-label">If you have a project file, please attach it now.</label>
+                    <input asp-for="ProjectFile" type="file" class="form-control-file" />
+                </div>
+                <br />
+                <p>Once you submit this form, Lab Management will review your request and reach out to you shortly. Please verify all project information is accurate before submitting. In the case corrections need to be made to your lab usage request, you can manage your requests or contact lab management. </p>
+                <div class="form-group">
+                    <input type="submit" value="Submit Request" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+   </fieldset>
+<!--
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div> -->
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
