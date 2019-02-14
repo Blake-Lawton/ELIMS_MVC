@@ -59,6 +59,11 @@ namespace ELIMS_MVC.Controllers
             return View();
         }
 
+        public IActionResult RequestForm()
+        {
+            return View();
+        }
+
 
         [AllowAnonymous]
         [HttpGet("login")]
