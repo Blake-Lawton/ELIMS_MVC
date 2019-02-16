@@ -13,20 +13,29 @@ namespace ELIMS_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IConfiguration _configuration;
 
-        public HomeController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
         [AllowAnonymous]
+        [Route("login")]
+        public async Task Login(string returnUrl)
+        {
+            var props = new AuthenticationProperties { RedirectUri = returnUrl };
+            await HttpContext.ChallengeAsync("CAS", props);
+
+        }
+
+        [Authorize]
+        public IActionResult AuthorizedPage()
+        {
+            ViewData["UserName"] = User.Identity.Name;
+            ViewData["Message"] = "Your Dashboard";
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "NAU's Environmental Engineering Lab";
@@ -34,26 +43,18 @@ namespace ELIMS_MVC.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public IActionResult Privacy()
         {
             ViewData["Message"] = "Environmental Laboratory Informatics and Management System Cookies and Privacy Policies";
             return View();
         }
 
-        //[HttpGet("AccessDenied")]
         public IActionResult AccessDenied()
         {
             return View();
         }
 
-        //[Authorize]
-        public IActionResult AuthorizedPage()
-        {
-            return View();
-        }
 
-        //[Authorize(Roles = "Admin")]
         public IActionResult AdminOnly()
         {
             return View();
@@ -62,16 +63,6 @@ namespace ELIMS_MVC.Controllers
         public IActionResult RequestForm()
         {
             return View();
-        }
-
-
-        [AllowAnonymous]
-        [HttpGet("login")]
-        public async Task Login(string returnUrl)
-        {
-            var props = new AuthenticationProperties { RedirectUri = returnUrl };
-            await HttpContext.ChallengeAsync("CAS", props);
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

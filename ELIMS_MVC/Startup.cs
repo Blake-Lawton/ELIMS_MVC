@@ -32,6 +32,8 @@ namespace ELIMS_MVC
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // Cookies
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -46,19 +48,26 @@ namespace ELIMS_MVC
 
             // Add CAS authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option =>
+                .AddCookie(options =>
                 {
-                    option.LoginPath = new PathString("/login");
+                    options.LoginPath = new PathString("/login");
+                    options.Cookie.Expiration = TimeSpan.FromMinutes(120);
                 })
                 .AddCAS(options =>
                 {
                     // Set CAS server URL using base URL found in 'appsettings.json'
-                    options.CasServerUrlBase = Configuration["CasBaseUrl"];
+                    options.CasServerUrlBase = Configuration["AuthenticationCas:CasBaseUrl"];
 
                     // Configure Sign-In Scheme
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
                 });
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "ELIMS.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -78,10 +87,10 @@ namespace ELIMS_MVC
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
