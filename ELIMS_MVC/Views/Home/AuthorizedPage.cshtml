@@ -3,23 +3,8 @@
     ViewData["Title"] = "Authorized Page";
 }
 
-<!--<h1>@User.Identity.Name  's Dashboard</h1> -->
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+<h3>Logged in as @ViewData["UserName"]</h3>
 
-<a asp-controller="Home" asp-action="Logout">Logout</a>
-
-<hr />
-
-<h2>Your claims:</h2>
-<!--
-<ul>
-    @foreach (var claim in User.Claims)
-    {
-        <li>@claim.Value  (@claim.Type)</li>
-    }
-</ul> -->
-
-<h2>Your lab usage requests:</h2>
-<!--Display this user's requests, so filter and display requests whose NAU username matches this user-->
-
-<h2>Your contact form submissions:</h2>
-<!--Display this user's contact form submissions, so filter and display requests whose NAU username matches this user-->
+<p>Put user dashboard here</p>
