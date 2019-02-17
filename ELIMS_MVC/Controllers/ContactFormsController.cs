@@ -109,9 +109,9 @@ namespace ELIMS_MVC.Controllers
         // POST: ContactForms/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,UserId,NAUEmail,Topic,Message,ContactDate")] ContactForm contactForm)
         {
             if (id != contactForm.Id)

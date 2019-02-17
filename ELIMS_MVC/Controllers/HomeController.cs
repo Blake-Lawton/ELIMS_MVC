@@ -54,12 +54,13 @@ namespace ELIMS_MVC.Controllers
             return View();
         }
 
-
+        [Authorize]
         public IActionResult AdminOnly()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult RequestForm()
         {
             return View();
