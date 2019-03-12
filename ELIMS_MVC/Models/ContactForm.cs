@@ -18,6 +18,9 @@ namespace ELIMS_MVC.Models
     {
         public int Id { get; set; }
 
+        // User ID from AspNetUser table
+        public string OwnerID { get; set; }
+
         [Display(Name = "First Name")]
         [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
