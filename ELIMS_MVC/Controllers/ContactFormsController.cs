@@ -7,25 +7,46 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELIMS_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
+using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity;
+using ELIMS_MVC.Data;
+using ELIMS_MVC.Authorization;
 
 namespace ELIMS_MVC.Controllers
 {
     public class ContactFormsController : Controller
     {
         private readonly ELIMS_MVCContext _context;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ContactFormsController(ELIMS_MVCContext context)
+        public ContactFormsController(ELIMS_MVCContext context, IAuthorizationService authorizationService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         // GET: ContactForms
+        [Authorize]
         public async Task<IActionResult> Index(string entryTopic, string search)
         {
+
             // Use LINQ to get list of topics
             IQueryable<string> topicQuery = from i in _context.ContactForm orderby i.Topic select i.Topic;
 
             var items = from i in _context.ContactForm select i;
+
+            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+
+            var currentUserId = _userManager.GetUserId(User);
+
+            // If the user isn't a manager or admin, check if they own the submission
+            if (!isAuthorized)
+            {
+                items = items.Where(c => c.OwnerID == currentUserId);
+            }
 
             if (!string.IsNullOrEmpty(entryTopic))
             {
@@ -48,6 +69,7 @@ namespace ELIMS_MVC.Controllers
 
         // GET: ContactForms/Details/5
         // Can be accessed by Admin, Manager, and specific User who made the contact request
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,14 +77,24 @@ namespace ELIMS_MVC.Controllers
                 return NotFound();
             }
 
-            var contactForm = await _context.ContactForm
+            var items = await _context.ContactForm
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contactForm == null)
+            if (items == null)
             {
                 return NotFound();
             }
 
-            return View(contactForm);
+            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+
+            var currentUserId = _userManager.GetUserId(User);
+
+            if (!isAuthorized
+                && currentUserId != items.OwnerID)
+            {
+                return new ChallengeResult();
+            }
+
+            return View(items);
         }
 
         // GET: ContactForms/Create
@@ -79,18 +111,53 @@ namespace ELIMS_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId,NAUEmail,Topic,Message,ContactDate")] ContactForm contactForm)
         {
+            var autoEmail = new MimeMessage();
+            autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
+            autoEmail.To.Add(new MailboxAddress("hcd25@nau.edu"));
+            //Lab instructor emails
+            // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
+            // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
+            autoEmail.Subject = "ELIMS Contact Notification";
+            autoEmail.Body = new TextPart("plain")
+            {
+                Text = @"You have recieved a contact information form from the ELIMS webpage. Please click this link to manage: https://elims.azurewebsites.net/ContactForms. Do not reply to this email."
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
+                client.Send(autoEmail);
+                client.Disconnect(true);
+            }
+
             if (ModelState.IsValid)
             {
+                contactForm.OwnerID = _userManager.GetUserId(User);
+
+                var isAuthorized = await _authorizationService.AuthorizeAsync(User, contactForm, ELIMSOperations.Create);
+
+                // If not authorized
+                if (!isAuthorized.Succeeded)
+                {
+                    _context.Add(contactForm);
+                    await _context.SaveChangesAsync();
+                    return View("./Views/Home/Index.cshtml");
+                }
+
                 _context.Add(contactForm);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("./Views/Home/Index.cshtml");
             }
-            return View(contactForm);
+            return View("/Home/Index");
         }
 
         // GET: ContactForms/Edit/5
         // MUST BE ADMIN ONLY
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,13 +170,20 @@ namespace ELIMS_MVC.Controllers
             {
                 return NotFound();
             }
+
+            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+
+            if (!isAuthorized)
+            {
+                return new ChallengeResult();
+            }
+
             return View(contactForm);
         }
 
         // POST: ContactForms/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,UserId,NAUEmail,Topic,Message,ContactDate")] ContactForm contactForm)
@@ -123,6 +197,10 @@ namespace ELIMS_MVC.Controllers
             {
                 try
                 {
+                    string date = contactForm.ContactDate;
+                    
+                    _context.Update(contactForm);
+                    contactForm.ContactDate = date;
                     _context.Update(contactForm);
                     await _context.SaveChangesAsync();
                 }
@@ -144,7 +222,7 @@ namespace ELIMS_MVC.Controllers
 
         // GET: ContactForms/Delete/5
         // Must be admin
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,6 +235,13 @@ namespace ELIMS_MVC.Controllers
             if (contactForm == null)
             {
                 return NotFound();
+            }
+
+            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+
+            if(!isAuthorized)
+            {
+                return new ChallengeResult();
             }
 
             return View(contactForm);
