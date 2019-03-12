@@ -1,22 +1,24 @@
 ﻿@model ELIMS_MVC.Models.ContactTopicViewModel
 
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Contact Form Submissions";
 }
 
-<h2>Index</h2>
+<h2>Contact Form Submissions</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
 <form asp-controller="ContactForms" asp-action="Index" method="get">
-    <p> Last Name: <input type="text" name="search" />
+    <p>
+        Last Name: <input type="text" name="search" />
 
-    <select asp-for="EntryTopic" asp-items="Model.Topics">
-        <option value=" ">All</option>
-    </select>
-    <input type="submit" value="Filter" />
+        <select asp-for="EntryTopic" asp-items="Model.Topics">
+            <option value=" ">All</option>
+        </select>
+        <input type="submit" value="Filter" />
 
 </form>
 
@@ -48,35 +50,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ContactForms) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NAUEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Topic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ContactForms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAUEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Topic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @*@if (User.IsInRole(Constants.ELIMSAdministratorsRole))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <text> | </text>
+                    }*@
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSUsersRole))
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    }
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+
+                    {
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,0 +1,130 @@
+﻿@model ELIMS_MVC.Models.Inventory
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+    <div>
+        <h4>Inventory</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CASNum)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CASNum)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Manufacturer)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HasMSDS)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HasMSDS)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HealthHazard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HealthHazard)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FlammableHazard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FlammableHazard)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ReactiveHazard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ReactiveHazard)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.OtherHazard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.OtherHazard)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentQty)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CurrentQty)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Unit)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Unit)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateReceived)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateReceived)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsCheckedOut)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsCheckedOut)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCheckedOut)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateCheckedOut)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateReturned)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateReturned)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Consumed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Consumed)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HazWaste)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HazWaste)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Disposed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Disposed)
+            </dd>
+        </dl>
+    </div>
+    <div>
+
+        <a asp-page="/Inventories/Edit" asp-route-id="@Model.Id">Edit</a>
+        <text> | </text>
+
+        <a asp-action="Index">Back to List</a>
+
+    </div>

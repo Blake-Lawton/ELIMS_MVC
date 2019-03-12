@@ -5,34 +5,35 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ELIMS_MVC.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using AspNetCore.Security.CAS;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using ELIMS_MVC.Authorization;
+using ELIMS_MVC.Services;
+using ELIMS_MVC.Data;
 
 namespace ELIMS_MVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Cookies
             services.Configure<CookiePolicyOptions>(options =>
@@ -45,40 +46,79 @@ namespace ELIMS_MVC
             // Set database connection from appsettings.json
             services.AddDbContext<ELIMS_MVCContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ELIMS_MVCContext")));
+            
+            // DO NOT CHANGE BACK TO .AddDefaultIdentity
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ELIMS_MVCContext>()
+                .AddDefaultTokenProviders();
 
-            // Add CAS authentication
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = new PathString("/login");
-                    options.Cookie.Expiration = TimeSpan.FromMinutes(120);
-                })
-                .AddCAS(options =>
-                {
-                    // Set CAS server URL using base URL found in 'appsettings.json'
-                    options.CasServerUrlBase = Configuration["AuthenticationCas:CasBaseUrl"];
-
-                    // Configure Sign-In Scheme
-                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-                });
-
-            services.AddSession(options =>
+            services.Configure<IdentityOptions>(options =>
             {
-                options.Cookie.Name = "ELIMS.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+
+                // User settings
+                options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+
+                options.LoginPath = "/Identity/Account/Login";
+
+                options.AccessDeniedPath = "/Identity/Account/AcessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            services.AddSingleton<IEmailSender, EmailSender>();
+
+            services.AddMvc(config =>
+            {
+                // using Microsoft.AspNetCore.Mvc.Authorization and AspNetCore.Authorization
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Authorization handlers
+            services.AddScoped<IAuthorizationHandler, UserIsOwnerAuthorizationHandler>();
+            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+
+            // User role authorization handlers
+            services.AddSingleton<IAuthorizationHandler, ELIMSAdministrationAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler, ELIMSManagerAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler, ELIMSUserAuthorizationHandler>();
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ELIMS_MVCContext dbContext)
         {
+            dbContext.Database.EnsureCreated();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
                 app.UseDatabaseErrorPage();
             }
             else
@@ -90,8 +130,8 @@ namespace ELIMS_MVC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSession();
             app.UseAuthentication();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {

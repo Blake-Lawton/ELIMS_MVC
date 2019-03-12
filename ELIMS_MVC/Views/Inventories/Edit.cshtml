@@ -1,0 +1,134 @@
+﻿@model ELIMS_MVC.Models.Inventory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+    <h4>Inventory</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CASNum" class="control-label"></label>
+                    <input asp-for="CASNum" class="form-control" />
+                    <span asp-validation-for="CASNum" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Manufacturer" class="control-label"></label>
+                    <input asp-for="Manufacturer" class="form-control" />
+                    <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="HasMSDS" /> @Html.DisplayNameFor(model => model.HasMSDS)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HealthHazard" class="control-label"></label>
+                    <input asp-for="HealthHazard" class="form-control" />
+                    <span asp-validation-for="HealthHazard" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FlammableHazard" class="control-label"></label>
+                    <input asp-for="FlammableHazard" class="form-control" />
+                    <span asp-validation-for="FlammableHazard" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReactiveHazard" class="control-label"></label>
+                    <input asp-for="ReactiveHazard" class="form-control" />
+                    <span asp-validation-for="ReactiveHazard" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OtherHazard" class="control-label"></label>
+                    <input asp-for="OtherHazard" class="form-control" />
+                    <span asp-validation-for="OtherHazard" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CurrentQty" class="control-label"></label>
+                    <input asp-for="CurrentQty" class="form-control" />
+                    <span asp-validation-for="CurrentQty" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Unit" class="control-label"></label>
+                    <input asp-for="Unit" class="form-control" />
+                    <span asp-validation-for="Unit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateReceived" class="control-label"></label>
+                    <input asp-for="DateReceived" class="form-control" />
+                    <span asp-validation-for="DateReceived" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="IsCheckedOut" /> @Html.DisplayNameFor(model => model.IsCheckedOut)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateCheckedOut" class="control-label"></label>
+                    <input asp-for="DateCheckedOut" class="form-control" />
+                    <span asp-validation-for="DateCheckedOut" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateReturned" class="control-label"></label>
+                    <input asp-for="DateReturned" class="form-control" />
+                    <span asp-validation-for="DateReturned" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Location" class="control-label"></label>
+                    <select asp-for="Location" class="form-control" id="Location">
+                        <option>241A</option>
+                        <option>241 - Flammable</option>
+                        <option>241 - Bases</option>
+                        <option>243 - Acids</option>
+                        <option>243 - Flammable</option>
+                        <option>AMBL (239)</option>
+                        <option>Inst. Lab (241)</option>
+                        <option>Out</option>
+                    </select>
+                    <span asp-validation-for="Location" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Consumed" /> @Html.DisplayNameFor(model => model.Consumed)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="HazWaste" /> @Html.DisplayNameFor(model => model.HazWaste)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Disposed" /> @Html.DisplayNameFor(model => model.Disposed)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

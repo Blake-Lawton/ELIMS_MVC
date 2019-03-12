@@ -4,7 +4,7 @@
     ViewData["Title"] = "Lab Usage Requests";
 }
 
-<h2>Index</h2>
+<h2>Lab Usage Requests</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,15 +18,15 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.RequestMade)
             </th>
@@ -42,7 +42,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProjectName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ProjectObjective)
             </th>
             <th>
@@ -74,9 +74,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProjectFile)
-            </th>
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.RequestStatus)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th></th>
         </tr>
@@ -84,15 +84,15 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.RequestMade)
             </td>
@@ -108,7 +108,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ProjectObjective)
             </td>
             <td>
@@ -140,15 +140,32 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectFile)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RequestStatus)
+
+                <a asp-controller="Request" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <text> | </text>
+
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+
+                    {
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+
+
             </td>
-            <td>
+                
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>

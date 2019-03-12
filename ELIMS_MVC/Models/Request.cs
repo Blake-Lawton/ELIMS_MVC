@@ -30,7 +30,10 @@ namespace ELIMS_MVC.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "NAU User ID")]
+        // UserID from AspNetUser table
+        public string OwnerID { get; set; }
+
+        [Display(Name = "User ID")]
         [Required]
         public int UserId { get; set; }
 
@@ -56,7 +59,7 @@ namespace ELIMS_MVC.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string LastName { get; set; }
 
-        [Display(Name = "NAU Email")]
+        [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public string NAUEmail { get; set; }
 
@@ -73,7 +76,7 @@ namespace ELIMS_MVC.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string ContactName { get; set; }
 
-        [Display(Name = "Contact UserID")]
+        [Display(Name = "Contact User ID")]
         public int ContactID { get; set; }
 
         public string Funding { get; set; }
@@ -103,7 +106,14 @@ namespace ELIMS_MVC.Models
         public string ProjectFile { get; set; }
 
         [Display(Name = "Status")]
-        public string RequestStatus { get; set; }
+        public RequestStatus Status { get; set; }
 
+    }
+
+    public enum RequestStatus
+    {
+        Pending,
+        Approved,
+        Denied
     }
 }
