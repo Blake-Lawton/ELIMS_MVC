@@ -1,0 +1,203 @@
+﻿@model IEnumerable<ELIMS_MVC.Models.Request>
+
+
+@{
+    ViewData["Title"] = "Your Dashboard";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h4>Logged in as @ViewData["UserName"]</h4>
+
+<hr />
+
+@if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+{
+    <h3>Pending Requests for Lab Use</h3>
+}
+
+@if (User.IsInRole(Constants.ELIMSUsersRole))
+{
+    <h3>Your Lab Usage Requests</h3>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.RequestMade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NAUEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.ProjectObjective)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContactName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ContactID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Funding)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SponsorName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SponsorPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SponsorEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Chemicals)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MeetingTimes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GroupMembers)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectFile)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestMade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAUEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ProjectObjective)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Funding)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SponsorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SponsorPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SponsorEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Chemicals)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MeetingTimes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GroupMembers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectFile)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+                    {
+                        <a asp-controller="Request" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <text> | </text>
+                    }
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+
+                    {
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+{
+    <b><p>View all requests <a href="/Request/Index">here</a>.</p></b>
+}
+
+
+<hr />
+
+<h3>Your Contact Form Submissions</h3>
+<p>Contact form submissions will be featured here in the final version, but has not been integrated into the dashboard for the alpha prototype.</p>
+
+@if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+{
+    <b><p>View all contact form submissions <a href="/ContactForms/Index">here</a>.</p></b>
+}
+
+<hr />
+
+<h3>Settings</h3>
+
+<b><p>Your claims:</p></b>
+<ul>
+    @foreach (var claim in User.Claims)
+    {
+        <li>@claim.Value  (@claim.Type)</li>
+    }
+</ul>

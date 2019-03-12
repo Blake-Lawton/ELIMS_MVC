@@ -125,14 +125,41 @@
             @Html.DisplayFor(model => model.ProjectFile)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.RequestStatus)
+            @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RequestStatus)
+            @Html.DisplayFor(model => model.Status)
         </dd>
     </dl>
 </div>
+
+@if (Model.Status != RequestStatus.Approved)
+{
+    @if ((await AuthorizationService.AuthorizeAsync(User, Model, ELIMSOperations.Approve)).Succeeded)
+    {
+        <form style="display:inline;" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@RequestStatus.Approved" />
+            <button type="submit" class="btn btn-xs btn-success">Approve</button>
+        </form>
+    }
+}
+
+@if (Model.Status != RequestStatus.Denied)
+{
+    @if ((await AuthorizationService.AuthorizeAsync(User, Model, ELIMSOperations.Deny)).Succeeded)
+    {
+        <form style="display:inline;" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="@RequestStatus.Denied" />
+            <button type="submit" class="btn btn-xs btn-success">Deny</button>
+        </form>
+    }
+}
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-controller="Request" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <text> | </text>
+
     <a asp-action="Index">Back to List</a>
 </div>

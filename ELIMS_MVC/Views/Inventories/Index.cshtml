@@ -1,0 +1,165 @@
+﻿@model IEnumerable<ELIMS_MVC.Models.Inventory>
+
+@{
+    ViewData["Title"] = "Chemical Inventory";
+}
+
+<h2>ENE Chemical Inventory</h2>
+
+<p>
+    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+    {
+        <a asp-action="Create">Create New</a>
+
+
+    <form asp-controller="Inventories" asp-action="Index" method="get">
+<p>
+    Name: <input type="text" name="search" />
+    <input type="submit" value="Filter" />
+</p>
+    </form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CASNum)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HasMSDS)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HealthHazard)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FlammableHazard)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReactiveHazard)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OtherHazard)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.DateReceived)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.IsCheckedOut)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.DateCheckedOut)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateReturned)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Consumed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HazWaste)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Disposed)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CASNum)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Manufacturer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HasMSDS)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HealthHazard)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FlammableHazard)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReactiveHazard)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OtherHazard)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.DateReceived)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCheckedOut)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.DateCheckedOut)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateReturned)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Consumed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HazWaste)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Disposed)
+                    </td>*@
+
+                <td>
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <text> | </text>
+                    }
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSUsersRole))
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    }
+
+                    @if (User.IsInRole(Constants.ELIMSAdministratorsRole))
+
+                    {
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    }
