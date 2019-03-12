@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ELIMS_MVC.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using ELIMS_MVC.Data;
 
 namespace ELIMS_MVC
 {
@@ -17,6 +19,15 @@ namespace ELIMS_MVC
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ELIMS_MVCContext>();
+                //context.Database.Migrate();
+
+               
+            }
 
             host.Run();
         }
