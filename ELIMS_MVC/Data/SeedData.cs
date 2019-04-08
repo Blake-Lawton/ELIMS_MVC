@@ -73,7 +73,7 @@ namespace ELIMS_MVC.Data
         }
 
         #endregion
-        #region snippet1
+        //#region snippet1
         public static void SeedDB(ELIMS_MVCContext context, string adminid, string managerid, string userid)
         {
             if (context.Request.Any())
@@ -82,96 +82,96 @@ namespace ELIMS_MVC.Data
             }
 
             // Some sample requests to seed the database with
-            context.Request.AddRange(
-            #region snipped_Request
-                new Request
-                {
-                    FirstName = "Bruce",
-                    LastName = "Wayne",
-                    UserId = 1234567,
-                    NAUEmail = "bruce@wayneenterprises.com",
-                    ProjectName = "OMAC",
-                    ProjectObjective = "Observational Metahuman Activity Construct",
-                    ContactName = "Jack Kirby",
-                    ContactID = 135790,
-                    Funding = "N/A",
-                    SponsorName = "Brother Eye",
-                    SponsorPhone = "123-456-7890",
-                    SponsorEmail = "brothereye@wayneenterprises.com",
-                    Chemicals = "N/A",
-                    MeetingTimes = "N/A",
-                    GroupMembers = "Buddy Blank, Alexander Luthor Jr., Max Lord",
-                    ProjectFile = "",
-                    Status = RequestStatus.Pending,
-                    OwnerID = adminid
-                },
-            #endregion
-            #endregion
+            //context.Request.AddRange(
+            //#region snipped_Request
+            //    new Request
+            //    {
+            //        FirstName = "Bruce",
+            //        LastName = "Wayne",
+            //        UserId = "1234567",
+            //        NAUEmail = "bruce@wayneenterprises.com",
+            //        ProjectName = "OMAC",
+            //        ProjectObjective = "Observational Metahuman Activity Construct",
+            //        ContactName = "Jack Kirby",
+            //        ContactID = "135790",
+            //        Funding = "N/A",
+            //        SponsorName = "Brother Eye",
+            //        SponsorPhone = "123-456-7890",
+            //        SponsorEmail = "brothereye@wayneenterprises.com",
+            //        Chemicals = "N/A",
+            //        MeetingTimes = "N/A",
+            //        GroupMembers = "Buddy Blank, Alexander Luthor Jr., Max Lord",
+            //        ProjectFile = "",
+            //        Status = RequestStatus.Pending,
+            //        OwnerID = adminid
+            //    },
+            //#endregion
+            //#endregion
 
-                new Request
-                {
-                    FirstName = "Diana",
-                    LastName = "Prince",
-                    UserId = 2468102,
-                    NAUEmail = "wonderwoman@jleague.com",
-                    ProjectName = "Themyscira",
-                    ProjectObjective = "Babysit these baby metahumans",
-                    ContactName = "Patty Jenkins",
-                    ContactID = 135210,
-                    Funding = "DC Comics",
-                    SponsorName = "William Moulton Martson",
-                    SponsorPhone = "123-456-7890",
-                    SponsorEmail = "wmm@dc.com",
-                    Chemicals = "N/A",
-                    MeetingTimes = "N/A",
-                    GroupMembers = "Donna Troy, Cassie Sandsmark, Elizabeth Moulton, Olive Bryne",
-                    ProjectFile = "",
-                    Status = RequestStatus.Approved,
-                    OwnerID = managerid
-                },
-                new Request
-                {
-                    FirstName = "Clark",
-                    LastName = "Kent",
-                    UserId = 9765432,
-                    NAUEmail = "ckent@dailyplanet.com",
-                    ProjectName = "Krypton",
-                    ProjectObjective = "Avoid parental responsibility",
-                    ContactName = "Connor Kent",
-                    ContactID = 135790,
-                    Funding = "N/A",
-                    SponsorName = "Lex Luthor",
-                    SponsorPhone = "123-456-7890",
-                    SponsorEmail = "thelight@cadmus.gov",
-                    Chemicals = "N/A",
-                    MeetingTimes = "N/A",
-                    GroupMembers = "Buddy Blank, Alexander Luthor Jr., Max Lord",
-                    ProjectFile = "",
-                    Status = RequestStatus.Approved,
-                    OwnerID = userid
-                },
-                new Request
-                {
-                    FirstName = "Barry",
-                    LastName = "Allen",
-                    UserId = 7654321,
-                    NAUEmail = "ballen@starlabs.org",
-                    ProjectName = "Gideon",
-                    ProjectObjective = "Artificial intelligence",
-                    ContactName = "Iris West",
-                    ContactID = 0000000,
-                    Funding = "Questionable",
-                    SponsorName = "Harrison Wells",
-                    SponsorPhone = "000-000-0000",
-                    SponsorEmail = "hwells@starlabs.org",
-                    Chemicals = "Who knows",
-                    MeetingTimes = "Tuesdays at 8pm",
-                    GroupMembers = "Cisco Ramon, Caitlin Snow, Joe West, Iris West",
-                    ProjectFile = "",
-                    Status = RequestStatus.Denied,
-                    OwnerID = userid
-                }
-             );
+             //   new Request
+             //   {
+             //       FirstName = "Diana",
+             //       LastName = "Prince",
+             //       UserId = "2468102",
+             //       NAUEmail = "wonderwoman@jleague.com",
+             //       ProjectName = "Themyscira",
+             //       ProjectObjective = "Babysit these baby metahumans",
+             //       ContactName = "Patty Jenkins",
+             //       ContactID = "135210",
+             //       Funding = "DC Comics",
+             //       SponsorName = "William Moulton Martson",
+             //       SponsorPhone = "123-456-7890",
+             //       SponsorEmail = "wmm@dc.com",
+             //       Chemicals = "N/A",
+             //       MeetingTimes = "N/A",
+             //       GroupMembers = "Donna Troy, Cassie Sandsmark, Elizabeth Moulton, Olive Bryne",
+             //       ProjectFile = "",
+             //       Status = RequestStatus.Approved,
+             //       OwnerID = managerid
+             //   },
+             //   new Request
+             //   {
+             //       FirstName = "Clark",
+             //       LastName = "Kent",
+             //       UserId = "9765432",
+             //       NAUEmail = "ckent@dailyplanet.com",
+             //       ProjectName = "Krypton",
+             //       ProjectObjective = "Avoid parental responsibility",
+             //       ContactName = "Connor Kent",
+             //       ContactID = "135790",
+             //       Funding = "N/A",
+             //       SponsorName = "Lex Luthor",
+             //       SponsorPhone = "123-456-7890",
+             //       SponsorEmail = "thelight@cadmus.gov",
+             //       Chemicals = "N/A",
+             //       MeetingTimes = "N/A",
+             //       GroupMembers = "Buddy Blank, Alexander Luthor Jr., Max Lord",
+             //       ProjectFile = "",
+             //       Status = RequestStatus.Approved,
+             //       OwnerID = userid
+             //   },
+             //   new Request
+             //   {
+             //       FirstName = "Barry",
+             //       LastName = "Allen",
+             //       UserId = "7654321",
+             //       NAUEmail = "ballen@starlabs.org",
+             //       ProjectName = "Gideon",
+             //       ProjectObjective = "Artificial intelligence",
+             //       ContactName = "Iris West",
+             //       ContactID = "0000000",
+             //       Funding = "Questionable",
+             //       SponsorName = "Harrison Wells",
+             //       SponsorPhone = "000-000-0000",
+             //       SponsorEmail = "hwells@starlabs.org",
+             //       Chemicals = "Who knows",
+             //       MeetingTimes = "Tuesdays at 8pm",
+             //       GroupMembers = "Cisco Ramon, Caitlin Snow, Joe West, Iris West",
+             //       ProjectFile = "",
+             //       Status = RequestStatus.Denied,
+             //       OwnerID = userid
+                //}
+             //);
             context.SaveChanges();
         }
 

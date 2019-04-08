@@ -55,7 +55,7 @@ namespace ELIMS_MVC.Controllers
 
             if (!String.IsNullOrEmpty(search))
             {
-                items = items.Where(s => s.LastName.Contains(search));
+                items = items.Where(s => s.Message.Contains(search));
             }
 
             var entryTopicVM = new ContactTopicViewModel

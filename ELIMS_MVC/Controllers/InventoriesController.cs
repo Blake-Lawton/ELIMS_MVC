@@ -11,6 +11,7 @@ using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ELIMS_MVC.Data;
+using ELIMS_MVC.Authorization;
 
 namespace ELIMS_MVC.Controllers
 {
@@ -30,6 +31,7 @@ namespace ELIMS_MVC.Controllers
         // GET: Inventories
         public async Task<IActionResult> Index(string search)
         {
+
             var items = from i in _context.Inventory
                         select i;
 

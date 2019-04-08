@@ -31,8 +31,13 @@ namespace ELIMS_MVC.Controllers
 
         // GET: Requests
         [Authorize]
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> Index(string search, string requestStatus)
         {
+            // Use LINQ to get list of topics
+            var list = new List<string>() { "Approved", "Denied", "Pending"};
+            var requestQuery = list.AsQueryable();
+
+
             var requests = from r in _context.Request select r;
 
             var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
@@ -45,12 +50,23 @@ namespace ELIMS_MVC.Controllers
                 requests = requests.Where(r => r.OwnerID == currentUserId);
             }
 
+            //if (!string.IsNullOrEmpty(requestStatus))
+            //{
+            //    requests = requests.Where(s => s.Status == requestStatus);
+            //}
+
             // Request = await requests.ToListAsync();
 
             if (!String.IsNullOrEmpty(search))
             {
                 requests = requests.Where(s => s.LastName.Contains(search));
             }
+
+            //var requestStatusVM = new RequestTopicViewModel
+            //{
+            //    Status = new SelectList(await requestQuery.Distinct().ToListAsync()),
+            //    Requests = await requests.ToListAsync()
+            //};
 
             return View(await requests.ToListAsync());
         }
@@ -88,7 +104,7 @@ namespace ELIMS_MVC.Controllers
         // POST: Requests/Details
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(int id, [Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status")] Request request)
+        public async Task<IActionResult> Details(int id, [Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status,OwnerID")] Request request)
         {
             var status = request.Status;
 
@@ -156,7 +172,7 @@ namespace ELIMS_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status")] Request request)
+        public async Task<IActionResult> Create([Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status,OwnerID")] Request request)
         {
             var autoEmail = new MimeMessage();
             autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
@@ -234,7 +250,7 @@ namespace ELIMS_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status")] Request request)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status,OwnerID")] Request request)
         {
             if (id != request.Id)
             {
@@ -245,7 +261,9 @@ namespace ELIMS_MVC.Controllers
             {
                 try
                 {
+                    //request.OwnerID = request.OwnerID;
                     _context.Update(request);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

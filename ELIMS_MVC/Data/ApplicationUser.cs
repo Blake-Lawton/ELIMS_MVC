@@ -22,5 +22,4 @@ namespace ELIMS_MVC.Data
         public DateTime LastLogIn { get; set; }
     }
 
-
 }
