@@ -10,12 +10,12 @@
     <h4>Request</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.UserId)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserId)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
@@ -70,12 +70,12 @@
         <dd>
             @Html.DisplayFor(model => model.ContactName)
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.ContactID)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ContactID)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.Funding)
         </dt>
@@ -140,7 +140,7 @@
         <form style="display:inline;" method="post">
             <input type="hidden" name="id" value="@Model.Id" />
             <input type="hidden" name="status" value="@RequestStatus.Approved" />
-            <button type="submit" class="btn btn-xs btn-success">Approve</button>
+            <button type="submit" class="btn btn-lg btn-success">Approve</button>
         </form>
     }
 }
@@ -152,14 +152,10 @@
         <form style="display:inline;" method="post">
             <input type="hidden" name="id" value="@Model.Id" />
             <input type="hidden" name="status" value="@RequestStatus.Denied" />
-            <button type="submit" class="btn btn-xs btn-success">Deny</button>
+            <button type="submit" class="btn btn-lg btn-danger">Deny</button>
         </form>
     }
 }
-
-<div>
-    <a asp-controller="Request" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <text> | </text>
-
+<br />
+<br />
     <a asp-action="Index">Back to List</a>
-</div>

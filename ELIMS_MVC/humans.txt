@@ -1,0 +1,37 @@
+﻿/* TEAM */
+
+	Team LabRats
+
+	Julian Bell
+	Roles: Team lead, communications, inventory design and development, back end development, testing
+
+	Remy Brandriff
+	Roles: System architect, deployment and version management, prototype development, front end development, webmaster, UI/UX
+
+	Blake Lawton
+	Roles: Document editor, email service developer, back end development, testing
+
+	Ana Steinmacher
+	Role: Team mentor (semester 2)
+
+	Jun Rao
+	Role: Team mentor (semester 1)
+
+/* THANKS */
+
+	Dr. Terry Baxter
+	NAU Civil and Environmental Engineering Professor
+	Project sponsor and primary client
+
+	Mick Kelly
+	NAU Environmental Health and Safety Officer
+	Project sponsor and secondary client
+
+	Dr. Eck Doerry
+	NAU CS Capstone Czar
+
+	Marc Lord, Chris Graver, John P Goral, Vivek Bongu
+	ITS Gurus who saved our asses
+
+/* SITE */
+	

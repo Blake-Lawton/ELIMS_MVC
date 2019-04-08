@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using ELIMS_MVC.Authorization;
 using ELIMS_MVC.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,18 +20,20 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            ILogger<RegisterModel> logger
+            //,
+            //IEmailSender emailSender
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            //_emailSender = emailSender;
         }
 
         [BindProperty]
@@ -41,9 +44,24 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            //[Display(Name = "If you are an NAU student or faculty, please enter your User ID # (ex: 1234567)")]
+            //public string UserId { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Select one")]
+            public string Status { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -67,23 +85,32 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { FirstName = Input.FirstName, LastName = Input.LastName,  UserName = Input.Email, Status = Input.Status, Email = Input.Email };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    if (Input.Status == "Student" || Input.Status == "Researcher (non-student)")
+                    {
+                        await _userManager.AddToRoleAsync(user, Constants.ELIMSUsersRole);
+                        user.LabAccess = false;
+                    }
+                    else if (Input.Status == "Student manager" || Input.Status == "Lab manager (non-student)")
+                    {
+                        await _userManager.AddToRoleAsync(user, Constants.ELIMSManagersRole);
+                        user.LabAccess = true;
+                    }
+                    else if (Input.Status == "Lab administrator")
+                    {
+                        await _userManager.AddToRoleAsync(user, Constants.ELIMSAdministratorsRole);
+                        user.LabAccess = true;
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

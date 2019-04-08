@@ -31,11 +31,7 @@ namespace ELIMS_MVC.Models
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string LastName { get; set; }
 
-        [Display(Name = "NAU UserID")]
-        [Required]
-        public string UserId { get; set; }
-
-        [Display(Name = "NAU Email")]
+        [Display(Name = "Email")]
         [Required]
         public string NAUEmail { get; set; }
 

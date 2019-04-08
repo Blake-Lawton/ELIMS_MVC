@@ -42,6 +42,9 @@ namespace ELIMS_MVC.Models
         //public DbSet<ELIMS_MVC.Models.User> Users { get; set; }
 
         public DbSet<ELIMS_MVC.Models.Inventory> Inventory { get; set; }
+        //public DbSet<ELIMS_MVC.Models.User> Users { get; set; }
+
+        public DbSet<ELIMS_MVC.Models.BioRaft> BioRaft { get; set; }
 
     }
 }

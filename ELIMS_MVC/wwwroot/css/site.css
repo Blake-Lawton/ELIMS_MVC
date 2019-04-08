@@ -5,14 +5,6 @@ body {
     padding-bottom: 20px;
 }
 
-.jumbotron {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    color: inherit;
-    background-color: white;
-}
-
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -25,7 +17,6 @@ body {
     font-size: 20px;
     line-height: 1.4;
 }
-
 
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {

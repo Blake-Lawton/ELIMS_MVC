@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Identity\Pages\Pages\**" />
-    <Content Remove="Areas\Identity\Pages\Pages\**" />
-    <EmbeddedResource Remove="Areas\Identity\Pages\Pages\**" />
-    <None Remove="Areas\Identity\Pages\Pages\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\favicon_qSE_icon.ico" />
   </ItemGroup>
 
@@ -31,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

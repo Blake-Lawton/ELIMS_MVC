@@ -20,13 +20,10 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account.Manage
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager
-            //,IEmailSender emailSender
-            )
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            //_emailSender = emailSender;
         }
 
         public string Username { get; set; }
