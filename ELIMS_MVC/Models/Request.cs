@@ -33,10 +33,6 @@ namespace ELIMS_MVC.Models
         // UserID from AspNetUser table
         public string OwnerID { get; set; }
 
-        [Display(Name = "User ID")]
-        [Required]
-        public int UserId { get; set; }
-
         [Display(Name = "Project Start Date")]
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
@@ -61,6 +57,7 @@ namespace ELIMS_MVC.Models
 
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
+        [Required]
         public string NAUEmail { get; set; }
 
         [Display(Name = "Project Name")]
@@ -72,12 +69,8 @@ namespace ELIMS_MVC.Models
         public string ProjectObjective { get; set; }
 
         [Display(Name = "Contact Name")]
-        [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string ContactName { get; set; }
-
-        [Display(Name = "Contact User ID")]
-        public int ContactID { get; set; }
 
         public string Funding { get; set; }
 

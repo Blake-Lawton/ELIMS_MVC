@@ -1,7 +1,15 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ELIMS_MVC.Data;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
     ViewData["Title"] = "Home";
 }
 
+<!--Everyone sees the carousel & the photos-->
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -26,7 +34,7 @@
             <div class="carousel-caption" role="option">
                 <h1>
                     Learn about what the ENE lab can do for your research.<br />
-                    <a class="btn btn-default" href="/lab/index">
+                    <a class="btn btn-default" href="/contactforms/create">
                         Learn More
                     </a>
                 </h1>
@@ -37,7 +45,7 @@
             <div class="carousel-caption" role="option">
                 <h1>
                     Reserve your time in the ENE Lab today! <br />
-                    <a class="btn btn-default" href="requestform/index">
+                    <a class="btn btn-default" href="request/create">
                         Learn More
                     </a>
                 </h1>
@@ -54,21 +62,69 @@
     </a>
 </div>
 
-<div class="jumbotron" style="background-color:white;">
-    <h1 class="display-4">Welcome to the Environmental Laboratory Informatics and Management System!</h1>
-    <p class="lead">This is your one-stop system for the Environmental Engineering (ENE) Lab.</p>
+<!--Separate the rest of the view based on user role-->
+@if (SignInManager.IsSignedIn(User) && User.IsInRole(Constants.ELIMSUsersRole))
+{
+    <!--If user is a standard user-->
+
+    <h1 class="display-4">Hello, @UserManager.GetUserName(User)!</h1>
+
     <hr class="my-4" />
-    <p class="lead">In ELIMS, you can:</p>
+    <p class="lead">What do you want to do today?</p>
 
     <div class="list-group">
         <a href="/request/create" class="list-group-item list-group-item-action">Request to use the ENE lab</a>
         <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Review your old requests and make changes to existing ones</a>
-        <a href="/Inventory/Index" class="list-group-item list-group-item-action">Search the lab's chemical inventory. If there's something wrong, like we're out of a chemical but the inventory says it's still in stock, submit a correction!</a>
+        <a href="/ContactForms/Create" class="list-group-item list-group-item-action">Contact Lab Management if you have any questions or concerns about the lab</a>
         <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Manage your account</a>
-        <a href="/ContactForms/Create" class="list-group-item list-group-item-action">Reach out to Lab Management if you have any questions or concerns about the lab</a>
     </div>
 
-    <br />
-  
+}
+else if (SignInManager.IsSignedIn(User) && (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole)))
+{
+    <!--If user is an admin or manager-->
+    <h1 class="display-4">Hello, @UserManager.GetUserName(User)!</h1>
 
-</div>
+    <hr class="my-4" />
+    <p class="lead">What do you want to do today?</p>
+
+
+    <div class="list-group">
+        <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Review the pending lab requests waiting for approval or denial</a>
+        <a href="/request/Index" class="list-group-item list-group-item-action">Review and search all lab requests</a>
+        <a href="/ContactForms/Index" class="list-group-item list-group-item-action">Review and search the contact form submissions</a>
+        <a href="/request/create" class="list-group-item list-group-item-action">Create a new lab request</a>
+        <a href="/Inventories/Index" class="list-group-item list-group-item-action">Search the lab's chemical inventory</a>
+        <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Manage your account</a>
+        <a href="/ContactForms/Create" class="list-group-item list-group-item-action">Create a new contact form submission</a>
+    </div>
+}
+else
+{
+    <!--If the user is not logged in-->
+
+    <div class="jumbotron" style="background-color:white;">
+        <h1 class="display-4">Welcome to the Environmental Laboratory Informatics and Management System!</h1>
+        <p class="lead">This is your one-stop system for the Environmental Engineering (ENE) Lab.</p>
+
+        <div style="width:50%;margin:auto;">
+            <a class="btn btn-primary btn-lg" href="/Identity/Account/Register" role="button">Register</a>
+            <a class="btn btn-primary btn-lg" href="/Identity/Account/Login" role="button">Login</a>
+        </div>
+
+        <hr class="my-4" />
+        <p class="lead">In ELIMS, you can:</p>
+
+        <div class="list-group">
+            <a href="/request/create" class="list-group-item list-group-item-action">Request to use the ENE lab</a>
+            <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Review your old requests and make changes to existing ones</a>
+            <a href="/Dashboard/Index" class="list-group-item list-group-item-action">Manage your account</a>
+            <a href="/ContactForms/Create" class="list-group-item list-group-item-action">Reach out to Lab Management if you have any questions or concerns about the lab</a>
+        </div>
+
+        <br />
+
+
+    </div>
+
+}

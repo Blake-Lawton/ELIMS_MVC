@@ -11,7 +11,49 @@
 
 <p>Please fill out this form, and we'll get back to you as soon as we can.</p>
 <p>Use this form to report any problems with ELIMS, including technical issues, incorrect information, or bugs, to Lab Management so the system can be updated. Thank you for doing your part to keep the ENE Lab running!</p>
+
+
+
 <div class="row">
+    <div class="col-md-4">
+        <div class="alert alert-danger" role="alert">
+            <span class="sr-only">Danger:</span>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+
+            <b>WAIT! Read me before continuing.</b> Do not use this form for emergencies. In case of emergency, please contact Lab Management directly by phone or email, or call 911 in case of injury.
+        </div>
+        <!--General contact information for the department -->
+        <h4>Adam Bringhurst</h4>
+        <h5>Lab Manager & Instructor</h5>
+        <address>
+            Engineering and Technology, Bldg #69, Room #<br />
+            PO Box: Box 15600<br />
+            Flagstaff, AZ 86011<br />
+            <abbr title="Email">E:</abbr> Adam.Bringhurst@nau.edu <br />
+            <abbr title="Phone">P:</abbr> 928.523.1164
+        </address>
+
+        <h4>Professor Terry Baxter, PhD, PE</h4>
+        <h5>Lab Director & Professor </h5>
+        <address>
+            Engineering and Technology, Bldg #69, Room #<br />
+            PO Box: Box 15600<br />
+            Flagstaff, AZ 86011<br />
+            <abbr title="Email">E:</abbr> Terry.Baxter@nau.edu <br />
+            <abbr title="Phone">P:</abbr>
+            928.523.2008
+        </address>
+
+        <h4>Civil and Environmental Engineering</h4>
+        <address>
+            Engineering and Technology, Bldg #69<br />
+            2112 S Huffer Ln<br />
+            PO Box: Box 15600<br />
+            Flagstaff, AZ 86011<br />
+            <abbr title="Phone">P:</abbr>
+            928.523.5251
+        </address>
+    </div>
     <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,11 +67,11 @@
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <input asp-for="UserId" class="form-control" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="NAUEmail" class="control-label"></label>
                 <input asp-for="NAUEmail" class="form-control" />
@@ -43,6 +85,7 @@
                     <option>Question about ELIMS</option>
                     <option>Question about ENE Lab</option>
                     <option>Question about a lab usage request</option>
+                    <option>Problem with the inventory</option>
                     <option>Reporting problem</option>
                 </select>
                 <!--<input asp-for="Topic" class="form-control" /> -->
@@ -55,22 +98,16 @@
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary" aria-label="Submit contact form request"><b>Submit</b></button>
             </div>
         </form>
     </div>
+
 </div>
 
-<!--General contact information for the department -->
-<h4>Civil and Environmental Engineering</h4>
-<address>
-    Engineering and Technology, Bldg #69<br />
-    2112 S Huffer Ln<br />
-    PO Box: Box 15600<br />
-    Flagstaff, AZ 86011<br />
-    <abbr title="Phone">P:</abbr>
-    928.523.5251
-</address>
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
