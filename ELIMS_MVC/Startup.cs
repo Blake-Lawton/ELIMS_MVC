@@ -21,14 +21,16 @@ namespace ELIMS_MVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration
+            //, IHostingEnvironment env
+            )
         {
             Configuration = configuration;
-            Environment = env;
+            //Environment = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment Environment { get; }
+        //public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
@@ -46,31 +48,32 @@ namespace ELIMS_MVC
             // Set database connection from appsettings.json
             services.AddDbContext<ELIMS_MVCContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ELIMS_MVCContext")));
-            
+
             // DO NOT CHANGE BACK TO .AddDefaultIdentity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ELIMS_MVCContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 1;
 
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
+            //    services.Configure<IdentityOptions>(options =>
+            //    {
+            //        // Password settings
+            //        options.Password.RequireDigit = true;
+            //        options.Password.RequireLowercase = true;
+            //        options.Password.RequireNonAlphanumeric = false;
+            //        options.Password.RequireUppercase = true;
+            //        options.Password.RequiredLength = 8;
+            //        options.Password.RequiredUniqueChars = 1;
 
-                // User settings
-                options.User.AllowedUserNameCharacters =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
-            });
+            //        // Lockout settings
+            //        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            //        options.Lockout.MaxFailedAccessAttempts = 5;
+
+            //        // User settings
+            //        options.User.AllowedUserNameCharacters =
+            //"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            //        options.User.RequireUniqueEmail = true;
+            //    });
 
 
             services.ConfigureApplicationCookie(options =>
@@ -113,12 +116,11 @@ namespace ELIMS_MVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ELIMS_MVCContext dbContext)
         {
-            dbContext.Database.EnsureCreated();
+            //dbContext.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
                 app.UseDatabaseErrorPage();
             }
             else
@@ -131,7 +133,7 @@ namespace ELIMS_MVC
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            app.UseIdentity();
+            //app.UseIdentity();
 
             app.UseMvc(routes =>
             {
