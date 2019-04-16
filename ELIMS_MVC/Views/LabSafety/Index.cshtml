@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ELIMS_MVC.Models.LabSafety>
+
+@{
+    ViewData["Title"] = "Lab Safety";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+        <p>Lab safety is of utmost importance in the ENE Lab. Many laboratories, including the ENE Lab, contain significant risks, but the best way to prevent accidents is to <strong>pay attention</strong> and <strong>be careful</strong>. In accordance with Environmental Health and Safety standards, everyone who uses the ENE Lab is required to complete certain trainings. </p>
+
+        <br />
+
+        <h4>Please review which trainings you must complete, and review the Standard Operating Procedure <a href="https://www.cefns.nau.edu/~teb/ambl/sop/SOP_AMBL_001A_ResquestingLabServices.pdf">here</a>.</h4>
+
+        <br />
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="everyone-tab" data-toggle="tab" href="#everyone" role="tab" aria-controls="everyone" aria-selected="true"><b>Everyone</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="supervisor-tab" data-toggle="tab" href="#supervisors" role="tab" aria-controls="supervisors" aria-selected="false"><b>Supervisors</b></a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="everyone" role="tabpanel" aria-labelledby="everyone-tab" style="background-color:white;">
+                <br />
+                <p>Everyone who wants access to the ENE Lab is required to complete the following <b>Lab Safety Trainings</b>:</p>
+                <ul>
+                    <li><a href="https://www5.nau.edu/its/mytraining/tutorial/tutorial5.aspx?id=6442497725">Chemical Hygiene training</a></li>
+                    <li><a href=https://www5.nau.edu/its/mytraining/tutorial/tutorial5.aspx?id =6442503287"">Field safety training</a></li>
+                    <li><a href="https://nau.edu/nau-research/research-safety-and-compliance/environmental-health-and-safety/safety-programs/biological-safety/">Biological safety training</a></li>
+                </ul>
+            </div>
+            <div class="tab-pane fade" id="supervisors" role="tabpanel" aria-labelledby="supervisors-tab" style="background-color:white;">
+                <br />
+                <p>If you are going to be supervising other people while in the lab, it is required you complete:</p>
+                <ul>
+                    <li><a href="https://www5.nau.edu/its/mytraining/tutorial/tutorial5.aspx?id=6442497725">Chemical Hygiene training</a></li>
+                    <li><a href=https://www5.nau.edu/its/mytraining/tutorial/tutorial5.aspx?id =6442503287"">Field safety training</a></li>
+                    <li><a href="https://nau.edu/nau-research/research-safety-and-compliance/environmental-health-and-safety/safety-programs/biological-safety/">Biological safety training</a></li>
+                    <li><a href="https://nau.bioraft.com/node/1667223">BioRAFT Supervisor Training</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="alert alert-danger" role="alert" style="font-size:large;">
+            <span class="sr-only">Danger:</span>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+
+            In case of an emergency, call the Northern Arizona University Police Department dispatch at <b>928.523.3000</b>.
+        </div>
+        <div class="alert alert-info" role="alert" style="font-size:large;">
+            The ENE Lab uses <a href="https://nau.bioraft.com/">BioRAFT</a> to track safety trainings. If you have any questions about the safety trainings or lab safety, contact <a href="/ContactForms/Create">Lab Management.</a>
+        </div>
+    </div>
+</div>
+
+
+
+@*<p>
+        <a asp-action="Create" class="btn btn-primary" role="button">Create New</a>
+    </p>
+
+    <table class="table table-striped table-hover">
+        <thead class="thead" style="background-color:#3c3c3c; color:lightgray;">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@

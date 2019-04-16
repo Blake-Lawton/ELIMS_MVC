@@ -38,7 +38,7 @@ namespace ELIMS_MVC.Controllers
 
             var items = from i in _context.ContactForm select i;
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             var currentUserId = _userManager.GetUserId(User);
 
@@ -84,7 +84,7 @@ namespace ELIMS_MVC.Controllers
                 return NotFound();
             }
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             var currentUserId = _userManager.GetUserId(User);
 
@@ -109,11 +109,11 @@ namespace ELIMS_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId,NAUEmail,Topic,Message,ContactDate")] ContactForm contactForm)
+        public async Task<IActionResult> Create([Bind("Id,CFirstName,CLastName,UserId,CEmail,Topic,Message,ContactDate")] ContactForm contactForm)
         {
             var autoEmail = new MimeMessage();
             autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
-            autoEmail.To.Add(new MailboxAddress("hcd25@nau.edu"));
+            autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
             //Lab instructor emails
             // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
             // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
@@ -121,6 +121,28 @@ namespace ELIMS_MVC.Controllers
             autoEmail.Body = new TextPart("plain")
             {
                 Text = @"You have recieved a contact information form from the ELIMS webpage. Please click this link to manage: https://elims.azurewebsites.net/ContactForms. Do not reply to this email."
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+
+                client.Connect("smtp.gmail.com", 587, false);
+                client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
+                client.Send(autoEmail);
+                client.Disconnect(true);
+            }
+
+            autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
+            autoEmail.To.Add(new MailboxAddress(contactForm.CEmail));
+            //Lab instructor emails
+            // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
+            // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
+            autoEmail.Subject = "ELIMS Contact Notification";
+            autoEmail.Body = new TextPart("plain")
+            {
+                Text = @"Thank you for submitting a contact request! Lab Management should be contacting you shortly.  Please do not reply to this email."
             };
 
             using (var client = new SmtpClient())
@@ -171,7 +193,7 @@ namespace ELIMS_MVC.Controllers
                 return NotFound();
             }
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             if (!isAuthorized)
             {
@@ -186,7 +208,7 @@ namespace ELIMS_MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,UserId,NAUEmail,Topic,Message,ContactDate")] ContactForm contactForm)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CFirstName,CLastName,UserId,CEmail,Topic,Message,ContactDate")] ContactForm contactForm)
         {
             if (id != contactForm.Id)
             {
@@ -237,7 +259,7 @@ namespace ELIMS_MVC.Controllers
                 return NotFound();
             }
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             if(!isAuthorized)
             {

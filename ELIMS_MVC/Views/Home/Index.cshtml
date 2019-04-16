@@ -63,7 +63,7 @@
 </div>
 
 <!--Separate the rest of the view based on user role-->
-@if (SignInManager.IsSignedIn(User) && User.IsInRole(Constants.ELIMSUsersRole))
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("USERS"))
 {
     <!--If user is a standard user-->
 
@@ -80,7 +80,7 @@
     </div>
 
 }
-else if (SignInManager.IsSignedIn(User) && (User.IsInRole(Constants.ELIMSAdministratorsRole) || User.IsInRole(Constants.ELIMSManagersRole)))
+else if (SignInManager.IsSignedIn(User) && (User.IsInRole("ADMINISTRATORS") || User.IsInRole("MANAGERS")))
 {
     <!--If user is an admin or manager-->
     <h1 class="display-4">Hello, @UserManager.GetUserName(User)!</h1>

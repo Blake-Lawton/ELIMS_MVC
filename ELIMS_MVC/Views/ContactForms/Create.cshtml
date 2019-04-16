@@ -4,7 +4,10 @@
     ViewData["Title"] = "Contact Us";
 }
 
-<h2>Contact Us</h2>
+<h2>
+    Contact Us
+    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+</h2>
 <h4>Please reach out to Lab Management with questions or concerns</h4>
 
 <hr />
@@ -12,11 +15,11 @@
 <p>Please fill out this form, and we'll get back to you as soon as we can.</p>
 <p>Use this form to report any problems with ELIMS, including technical issues, incorrect information, or bugs, to Lab Management so the system can be updated. Thank you for doing your part to keep the ENE Lab running!</p>
 
-
+<br />
 
 <div class="row">
     <div class="col-md-4">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" style="font-size:large;">
             <span class="sr-only">Danger:</span>
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 
@@ -58,14 +61,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="CFirstName" class="control-label"></label>
+                <input asp-for="CFirstName" class="form-control" />
+                <span asp-validation-for="CFirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="CLastName" class="control-label"></label>
+                <input asp-for="CLastName" class="form-control" />
+                <span asp-validation-for="CLastName" class="text-danger"></span>
             </div>
             @*<div class="form-group">
                     <label asp-for="UserId" class="control-label"></label>
@@ -73,9 +76,9 @@
                     <span asp-validation-for="UserId" class="text-danger"></span>
                 </div>*@
             <div class="form-group">
-                <label asp-for="NAUEmail" class="control-label"></label>
-                <input asp-for="NAUEmail" class="form-control" />
-                <span asp-validation-for="NAUEmail" class="text-danger"></span>
+                <label asp-for="CEmail" class="control-label"></label>
+                <input asp-for="CEmail" class="form-control" />
+                <span asp-validation-for="CEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Topic" class="control-label"></label>

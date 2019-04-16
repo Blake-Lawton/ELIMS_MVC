@@ -40,7 +40,7 @@ namespace ELIMS_MVC.Controllers
 
             var requests = from r in _context.Request select r;
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             var currentUserId = _userManager.GetUserId(User);
 
@@ -87,7 +87,7 @@ namespace ELIMS_MVC.Controllers
                 return NotFound();
             }
 
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             var currentUserId = _userManager.GetUserId(User);
 
@@ -231,7 +231,7 @@ namespace ELIMS_MVC.Controllers
             {
                 return NotFound();
             }
-            var isAuthorized = User.IsInRole(Constants.ELIMSManagersRole) || User.IsInRole(Constants.ELIMSAdministratorsRole);
+            var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
 
             var currentUserId = _userManager.GetUserId(User);
 
