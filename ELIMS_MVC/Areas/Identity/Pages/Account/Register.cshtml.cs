@@ -60,6 +60,10 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
+            [Required]
             [Display(Name = "Select one")]
             public string Status { get; set; }
 
@@ -85,7 +89,14 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { FirstName = Input.FirstName, LastName = Input.LastName,  UserName = Input.Email, Status = Input.Status, Email = Input.Email };
+                //string un = Convert.ToString(Input.Email);
+                //int index = un.IndexOf("@");
+                //if(index > 0)
+                //{
+                //    un = un.Substring(0, index);
+                //}
+
+                var user = new ApplicationUser { FirstName = Input.FirstName, LastName = Input.LastName,  UserName = Input.UserName, Status = Input.Status, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -95,17 +106,17 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account
 
                     if (Input.Status == "Student" || Input.Status == "Researcher (non-student)")
                     {
-                        await _userManager.AddToRoleAsync(user, Constants.ELIMSUsersRole);
+                        await _userManager.AddToRoleAsync(user, "USERS");
                         user.LabAccess = false;
                     }
                     else if (Input.Status == "Student manager" || Input.Status == "Lab manager (non-student)")
                     {
-                        await _userManager.AddToRoleAsync(user, Constants.ELIMSManagersRole);
+                        await _userManager.AddToRoleAsync(user, "MANAGERS");
                         user.LabAccess = true;
                     }
                     else if (Input.Status == "Lab administrator")
                     {
-                        await _userManager.AddToRoleAsync(user, Constants.ELIMSAdministratorsRole);
+                        await _userManager.AddToRoleAsync(user, "ADMINISTRATORS");
                         user.LabAccess = true;
                     }
 

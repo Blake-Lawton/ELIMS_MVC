@@ -1,11 +1,128 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h1>@ViewData["Title"]</h1>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
+
+<h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   @ViewData["Title"]</h1>
 
 <hr />
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 
+<h4>Manage your account settings</h4>
+<br />
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true"><b>Profile</b></a>
+    </li>
+    @*<li class="nav-item">
+        <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="password" aria-selected="false"><<b>Password</b></a>
+    </li>*@
+    <li class="nav-item">
+        <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="false"><b>Personal Data</b></a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="background-color:white;width:75%;">
+        <h4>Manage your account</h4>
+        <br />
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Input.Email" class="form-control" />
+                    @*<button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>*@
+                }
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.OldPassword"></label>
+                <input asp-for="Input.OldPassword" class="form-control" />
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewPassword"></label>
+                <input asp-for="Input.NewPassword" class="form-control" />
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form>
+
+    </div>
+    @*<div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+        <h4>Manage your password</h4>
+        <br />
+        <form id="change-password-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.OldPassword"></label>
+                <input asp-for="Input.OldPassword" class="form-control" />
+                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewPassword"></label>
+                <input asp-for="Input.NewPassword" class="form-control" />
+                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Update password</button>
+        </form>
+    </div>*@
+    <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab" style="background-color:white;width:75%;">
+        <h4>Manage your personal data</h4>
+        <br />
+        <p>Your account contains personal data that you have given us. Please visit our <a href="/Home/Privacy">Privacy and Cookies policies</a> to learn more about what this means. This page allows you to download or delete that data.</p>
+        <p>
+            <div class="alert alert-danger" role="alert">
+                <span class="sr-only">Danger:</span>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <strong>Deleting this data will permanently remove your account, and this cannot be recovered. This <u>will not</u> delete your lab usage requests or contact form submissions.</strong>
+            </div>
+            
+        </p>
+        <form asp-page="DownloadPersonalData" method="post" class="form-group">
+            <button class="btn btn-default" type="submit">Download</button>
+        </form>
+        <p>
+            <a asp-page="DeletePersonalData" class="btn btn-default">Delete</a>
+        </p>
+
+
+    </div>
+</div>
