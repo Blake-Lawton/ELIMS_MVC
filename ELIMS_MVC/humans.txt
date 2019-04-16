@@ -3,13 +3,13 @@
 	Team LabRats
 
 	Julian Bell
-	Roles: Team lead, communications, inventory design and development, back end development, testing
+	Roles: Team lead, communications, inventory design and development, back end development, unit testing
 
 	Remy Brandriff
-	Roles: System architect, deployment and version management, prototype development, front end development, webmaster, UI/UX
+	Roles: System architect, deployment/version management, prototype development, front end development, webmaster, UI/UX, usability testing
 
 	Blake Lawton
-	Roles: Document editor, email service developer, back end development, testing
+	Roles: Document editor, email service developer, back end development, integration testing
 
 	Ana Steinmacher
 	Role: Team mentor (semester 2)
@@ -31,7 +31,12 @@
 	NAU CS Capstone Czar
 
 	Marc Lord, Chris Graver, John P Goral, Vivek Bongu
-	ITS Gurus who saved our asses
+	ITS Gurus who saved our asses and gave us a crash course in Visual Studio development
+
+	Trip
+	Cat
 
 /* SITE */
-	
+	ELIMS was developed in the 2018-2019 academic year as a computer science capstone project, at Northern Arizona University.
+
+	LabRats website: https://www.cefns.nau.edu/capstone/projects/CS/2019/LabRats-S19/
