@@ -45,7 +45,7 @@
                         <li><a asp-area="" asp-controller="Request" asp-action="Index">Lab Requests</a></li>
                         <li><a asp-area="" asp-controller="LabSafety" asp-action="Index">Lab Safety</a></li>
                         <li><a asp-area="" asp-controller="Inventories" asp-action="Index">Inventory</a></li>
-                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">My Dashboard</a></li>
+                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">User Control</a></li>
                     }
                     else if (SignInManager.IsSignedIn(User) && User.IsInRole("USERS"))
                     {
@@ -96,8 +96,9 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+
+
 </body>
-
-
 
 </html>
