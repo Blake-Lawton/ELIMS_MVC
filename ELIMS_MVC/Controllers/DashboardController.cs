@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ELIMS_MVC.Authorization;
 using ELIMS_MVC.Data;
 using ELIMS_MVC.Models;
 using ELIMS_MVC.ViewModels;
@@ -19,6 +20,7 @@ namespace ELIMS_MVC.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthorizationService _authorizationService;
 
+        public ApplicationUser AppUser { get; set; }
 
         public DashboardController(ELIMS_MVCContext context, UserManager<ApplicationUser> userManager, IAuthorizationService authorizationService)
         {
@@ -45,180 +47,127 @@ namespace ELIMS_MVC.Controllers
             return View(await users.ToListAsync());
         }
 
-        //// GET: Requests/Details/5
-        //[Authorize]
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Dashboard/Create
+        [Authorize]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //    // Find the specific user by Id
-        //    var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+        // GET: Delete
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    var isAuthorized = User.IsInRole("ADMINISTRATORS");
+            var isAuthorized = User.IsInRole("ADMINISTRATORS") || User.IsInRole("MANAGERS");
 
-        //    if (!isAuthorized)
-        //    {
-        //        return new ChallengeResult();
-        //    }
+            if(!isAuthorized)
+            {
+                return NotFound();
+            }
 
-        //    return View(user);
-        //}
+            return View(user);
+        }
 
-        //// POST: Users/Details
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Details(int id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,FirstName,LastName,Role,LabAccess,TrainingsCompleted,LastLogin")] ApplicationUser user)
-        //{
-        //    var u = await _context.Users.FindAsync(id);
+        // POST: Delete
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            //var AppUsers = _userManager.Users.ToList();
+            var user = await _userManager.FindByIdAsync(id);
 
-        //    if (u == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if(user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+            }
 
-        //    var uid = Int32.Parse(user.Id);
+            return RedirectToPage("Index");
+        }
 
-        //    if (id != uid)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Edit
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var isAuthorized = User.IsInRole("ADMINISTRATORS");
-        //    if (!isAuthorized)
-        //    {
-        //        return new ChallengeResult();
-        //    }
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.Users.Update(u);
-        //    await _context.SaveChangesAsync();
+            return View(user);
+        }
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // POST: Edit
+        public async Task<IActionResult> OnPostEdit(string id, [Bind("Id,UserName,FirstName,LastName,Email,PhoneNumber,Status")] ApplicationUser user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
 
-        //// GET: Users/Create
-        //[Authorize]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+            if (ModelState.IsValid)
+            {
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                else if (user != null)
+                {
+                    
+                        var result = await _userManager.UpdateAsync(user);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                        }
+                }
+            }
 
-        //// POST: Users/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,FirstName,LastName,Role,LabAccess,TrainingsCompleted,LastLogin")] ApplicationUser user)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var isAuthorized = User.IsInRole("ADMINISTRATORS");
+            return RedirectToAction("Index");
+        }
 
-        //        if (!isAuthorized)
-        //        {
-        //            return new ChallengeResult();
-        //        }
+        // GET: Details
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //        _context.Add(user);
-        //        await _context.SaveChangesAsync();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(user);
-        //}
+            var isAuthorized = User.IsInRole("ADMINISTRATORS") || User.IsInRole("MANAGERS");
 
-        //// GET: Users/Edit
-        //[Authorize]
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (!isAuthorized)
+            {
+                return NotFound();
+            }
 
-        //    var user = await _context.Users.FindAsync(id);
+            return View(user);
+        }
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var isAuthorized = User.IsInRole("ADMINISTRATORS");
-
-        //    if (!isAuthorized)
-        //    {
-        //        return new ChallengeResult();
-        //    }
-
-        //    return View(user);
-        //}
-
-        //// POST: Users/Edit
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,FirstName,LastName,Role,LabAccess,TrainingsCompleted,LastLogin")] ApplicationUser user)
-        //{
-        //    var uid = Int32.Parse(user.Id);
-
-        //    if (id != uid)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(user);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!UserExists(user.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(user);
-        //}
-
-        ////GET: Users/Delete
-        //[Authorize]
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-
-        //    var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var isAuthorized = User.IsInRole("ADMINISTRATORS");
-
-        //    if (!isAuthorized)
-        //    {
-        //        return new ChallengeResult();
-        //    }
-
-        //    return View(user);
-        //}
 
         private bool UserExists(string id)
         {
@@ -226,6 +175,5 @@ namespace ELIMS_MVC.Controllers
         }
 
     }
-
 
 }
