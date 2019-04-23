@@ -36,10 +36,10 @@
                 <label asp-for="Input.Status" class="control-label"></label>
                 <select asp-for="Input.Status" class="form-control" id="Location">
                     <option>Student</option>
-                    <option>Student manager</option>
+                    @*<option>Student manager</option>*@
                     <option>Researcher (non-student)</option>
-                    <option>Lab manager (non-student)</option>
-                    <option>Lab administrator</option>
+                    @*<option>Lab manager (non-student)</option>
+                <option>Lab administrator</option>*@
                 </select>
                 <span asp-validation-for="Input.Status" class="text-danger"></span>
             </div>
@@ -53,6 +53,10 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <p>By creating an account you agree to our <a href="/Home/Privacy" style="color:dodgerblue">policies</a>.</p>
+
+
             <button type="submit" class="btn btn-primary"><b>Register</b></button>
         </form>
     </div>
