@@ -39,7 +39,7 @@
                     @*<option>Student manager</option>*@
                     <option>Researcher (non-student)</option>
                     @*<option>Lab manager (non-student)</option>
-                <option>Lab administrator</option>*@
+                        <option>Lab administrator</option>*@
                 </select>
                 <span asp-validation-for="Input.Status" class="text-danger"></span>
             </div>
@@ -60,8 +60,16 @@
             <button type="submit" class="btn btn-primary"><b>Register</b></button>
         </form>
     </div>
-</div>
+    <div class="col-md-6 col-md-offset-2">
+        <br />
+        <section>
+            <div class="alert alert-warning" role="alert">
+                <h4>Have an account already?</h4>
+                <p>Welcome back! Sign in <a href="./Login">here!</a></p>
+            </div>
+            </section>
+    </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

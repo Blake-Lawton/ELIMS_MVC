@@ -46,21 +46,6 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
-            [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
-            public string OldPassword { get; set; }
-
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.",MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "New Password")]
-            public string NewPassword { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
-
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -69,12 +54,6 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account.Manage
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var hasPassword = await _userManager.HasPasswordAsync(user);
-            if (!hasPassword)
-            {
-                return RedirectToPage("./SetPassword");
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
@@ -128,19 +107,6 @@ namespace ELIMS_MVC.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
-
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
-            if (!changePasswordResult.Succeeded)
-            {
-                foreach (var error in changePasswordResult.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return Page();
-            }
-
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been changed.";
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
