@@ -28,7 +28,7 @@
 	Project sponsor and secondary client
 
 	Dr. Eck Doerry
-	NAU CS Capstone Czar
+	NAU CS Capstone Professor
 
 	Marc Lord, Chris Graver, John P Goral, Vivek Bongu
 	ITS Gurus who saved our asses and gave us a crash course in Visual Studio development
