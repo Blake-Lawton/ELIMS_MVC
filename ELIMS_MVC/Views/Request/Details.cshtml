@@ -4,158 +4,250 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Request Details</h2>
 
-<div>
-    <h4>Request</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @*<dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RequestMade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RequestMade)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NAUEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NAUEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectObjective)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectObjective)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ContactName)
-        </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.ContactID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ContactID)
-        </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Funding)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Funding)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SponsorName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SponsorName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SponsorPhone)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SponsorPhone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SponsorEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SponsorEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Chemicals)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Chemicals)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MeetingTimes)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MeetingTimes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.GroupMembers)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.GroupMembers)
-        </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.ProjectFile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProjectFile)
-        </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
-</div>
+<hr />
 
-@if (Model.Status != RequestStatus.Approved)
-{
-    @if ((await AuthorizationService.AuthorizeAsync(User, Model, ELIMSOperations.Approve)).Succeeded)
+<fieldset id="requestform" style="display:block; margin: 0 2px; border:1px solid #c0c0c0; padding: .35em .625em .75em;">
+    <legend style="background-color: #4BB721; display:table; max-width:100%; padding: 3px 6px; color:#fff; white-space:normal;"><b>Request Details</b></legend>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.StartDate)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.EndDate)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.RequestMade)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.RequestMade)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.FirstName)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.LastName)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.NAUEmail)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.NAUEmail)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.ProjectName)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.ProjectName)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.ProjectObjective)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.ProjectObjective)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.ContactName)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.ContactName)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.Funding)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.Funding)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.SponsorName)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.SponsorName)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.SponsorPhone)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.SponsorPhone)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.SponsorEmail)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.SponsorEmail)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.Chemicals)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.Chemicals)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.MeetingTimes)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.MeetingTimes)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.GroupMembers)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.GroupMembers)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </b>
+                </td>
+                <td>
+
+                    @Html.DisplayFor(model => model.Status)
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    @*@if (Model.Status != RequestStatus.Approved)
     {
-        <form style="display:inline;" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@RequestStatus.Approved" />
-            <button type="submit" class="btn btn-lg btn-success">Approve</button>
-        </form>
-    }
-}
+        @if (User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS"))
+        {
+            <form style="display:inline;" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="status" value="@RequestStatus.Approved" />
+                <button type="submit" class="btn btn-lg btn-success">Approve</button>
 
-@if (Model.Status != RequestStatus.Denied)
-{
-    @if ((await AuthorizationService.AuthorizeAsync(User, Model, ELIMSOperations.Deny)).Succeeded)
-    {
-        <form style="display:inline;" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="hidden" name="status" value="@RequestStatus.Denied" />
-            <button type="submit" class="btn btn-lg btn-danger">Deny</button>
-        </form>
+            </form>
+        }
     }
-}
-<br />
-<br />
-    <a asp-action="Index">Back to List</a>
+
+    @if (Model.Status != RequestStatus.Denied)
+    {
+        @if (User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS"))
+        {
+            <form style="display:inline;" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="status" value="@RequestStatus.Denied" />
+                <button type="submit" class="btn btn-lg btn-danger">Deny</button>
+            </form>
+        }
+    }*@
+    <br />
+    <br />
+    <div class="form-group">
+        <a class="btn btn-primary" href="/Request/Index" role="button">Back to list</a>
+    </div>
+
+</fieldset>

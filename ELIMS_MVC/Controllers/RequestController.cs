@@ -37,7 +37,6 @@ namespace ELIMS_MVC.Controllers
             var list = new List<string>() { "Approved", "Denied", "Pending"};
             var requestQuery = list.AsQueryable();
 
-
             var requests = from r in _context.Request select r;
 
             var isAuthorized = User.IsInRole("MANAGERS") || User.IsInRole("ADMINISTRATORS");
@@ -50,23 +49,10 @@ namespace ELIMS_MVC.Controllers
                 requests = requests.Where(r => r.OwnerID == currentUserId);
             }
 
-            //if (!string.IsNullOrEmpty(requestStatus))
-            //{
-            //    requests = requests.Where(s => s.Status == requestStatus);
-            //}
-
-            // Request = await requests.ToListAsync();
-
             if (!String.IsNullOrEmpty(search))
             {
                 requests = requests.Where(s => s.LastName.Contains(search));
             }
-
-            //var requestStatusVM = new RequestTopicViewModel
-            //{
-            //    Status = new SelectList(await requestQuery.Distinct().ToListAsync()),
-            //    Requests = await requests.ToListAsync()
-            //};
 
             return View(await requests.ToListAsync());
         }
@@ -174,28 +160,28 @@ namespace ELIMS_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,StartDate,EndDate,RequestMade,FirstName,LastName,NAUEmail,ProjectName,ProjectObjective,ContactName,ContactID,Funding,SponsorName,SponsorPhone,SponsorEmail,Chemicals,MeetingTimes,GroupMembers,ProjectFile,Status,OwnerID")] Request request)
         {
-            var autoEmail = new MimeMessage();
-            autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
-            autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
-            //Lab instructor emails
-            // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
-            // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
-            autoEmail.Subject = "ELIMS Contact Notification";
-            autoEmail.Body = new TextPart("plain")
-            {
-                Text = @"A new request for lab usage has been submitted. Please click this link to manage: https://elims.azurewebsites.net/request. Do not reply to this email. Thank you!"
-            };
+            //var autoEmail = new MimeMessage();
+            //autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
+            //autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
+            ////Lab instructor emails
+            //// autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
+            //// autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
+            //autoEmail.Subject = "ELIMS Contact Notification";
+            //autoEmail.Body = new TextPart("plain")
+            //{
+            //    Text = @"A new request for lab usage has been submitted. Please click this link to manage: https://elims.azurewebsites.net/request. Do not reply to this email. Thank you!"
+            //};
 
-            using (var client = new SmtpClient())
-            {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            //using (var client = new SmtpClient())
+            //{
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
 
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
-                client.Send(autoEmail);
-                client.Disconnect(true);
-            }
+            //    client.Connect("smtp.gmail.com", 587, false);
+            //    client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
+            //    client.Send(autoEmail);
+            //    client.Disconnect(true);
+            //}
 
             if (ModelState.IsValid)
             {
@@ -300,10 +286,10 @@ namespace ELIMS_MVC.Controllers
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, request, ELIMSOperations.Delete);
 
-            if (!isAuthorized.Succeeded)
-            {
-                return new ChallengeResult();
-            }
+            //if (!isAuthorized.Succeeded)
+            //{
+            //    return new ChallengeResult();
+            //}
 
             return View(request);
         }

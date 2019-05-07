@@ -11,42 +11,20 @@ using Microsoft.AspNetCore.Authentication;
 using MimeKit;
 using MailKit.Net.Smtp;
 
+// HomeController, corresponds to Home Views. Nothing important here, just displays the pages, no data manipulation necessary
+
 namespace ELIMS_MVC.Controllers
 {
     public class HomeController : Controller
     {
+        // Home page
         [AllowAnonymous]
         public IActionResult Index()
         {
-            //var autoEmail = new MimeMessage();
-            //autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
-            //autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
-            //autoEmail.Subject = "Auto Email";
-            //autoEmail.Body = new TextPart("plain")
-            //{
-            //    Text = "This is an automated testing email"
-            //};
-
-            //using (var client = new SmtpClient())
-            //{
-            //    client.Connect("smtp.gmail.com", 587, false);
-            //    client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
-            //    client.Send(autoEmail);
-            //    client.Disconnect(true);
-            //}
-
             return View();
         }
 
-        //[AllowAnonymous]
-        //[Route("login")]
-        //public async Task Login(string returnUrl)
-        //{
-        //    var props = new AuthenticationProperties { RedirectUri = returnUrl };
-        //    await HttpContext.ChallengeAsync("CAS", props);
-
-        //}
-
+        // About page
         [AllowAnonymous]
         public IActionResult About()
         {
@@ -55,6 +33,7 @@ namespace ELIMS_MVC.Controllers
             return View();
         }
 
+        // Privacy & cookie policy
         [AllowAnonymous]
         public IActionResult Privacy()
         {
@@ -62,26 +41,14 @@ namespace ELIMS_MVC.Controllers
             return View();
         }
 
+        // Our 'Access Denied' page
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             return View();
         }
 
-        [Authorize]
-        public IActionResult AdminOnly()
-        {
-            ViewData["UserName"] = User.Identity.Name;
-            ViewData["Message"] = "Your Dashboard";
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult RequestForm()
-        {
-            return View();
-        }
-
+        // In case of error
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [AllowAnonymous]
         public IActionResult Error()

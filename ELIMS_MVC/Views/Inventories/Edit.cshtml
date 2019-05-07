@@ -5,9 +5,9 @@
 }
 
 <h2>Edit</h2>
-
-    <h4>Inventory</h4>
-    <hr />
+<hr />
+<fieldset id="deleterequest" style="display:block; margin: 0 2px; border:1px solid #c0c0c0; padding: .35em .625em .75em;">
+    <legend style="background-color: #4BB721; display:table; max-width:100%; padding: 3px 6px; color:#fff; white-space:normal;"><b>Edit Inventory Item</b></legend>
     <div class="row">
         <div class="col-md-4">
             <form asp-action="Edit">
@@ -123,12 +123,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary"><b>Save</b></button>
+                    <button type="submit" class="btn btn-success"><b>Save</b></button>
                 </div>
             </form>
         </div>
     </div>
-
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
+</fieldset>
+
+

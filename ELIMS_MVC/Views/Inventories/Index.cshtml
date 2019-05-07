@@ -10,24 +10,15 @@
     ViewData["Title"] = "Chemical Inventory";
 }
 
-<h2>ENE Chemical Inventory</h2>
+<h2>ENE Chemical Inventory Dashboard</h2>
 <hr />
 
 <p>
-    @if (User.IsInRole("USERS"))
-    {
-        <h2 class="text-danger">Access Denied</h2>
-        <h3>You do not have access to this content.</h3>
-        <br />
-
-        <h4>Please <a href="/ContactForms/Create">contact</a> Lab Management if you believe this has been in error.</h4>
-        <br />
-    }
 
     @if (User.IsInRole("ADMINISTRATORS") || User.IsInRole("MANAGERS"))
     {
     <p>
-        <a asp-action="Create" class="btn btn-primary" role="button" style="position:absolute;right:5%;">Create New</a>
+        <a asp-action="Create" class="btn btn-success" role="button" style="position:absolute;right:5%;">Create New</a>
     </p>
 
     <input class="form-control" id="myInput" type="text" placeholder="Search inventory..." style="width:auto;">

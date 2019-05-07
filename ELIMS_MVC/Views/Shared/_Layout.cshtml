@@ -37,7 +37,7 @@
             <div class="navbar-collapse collapse">
                 <!--Where the navbar-nav ul went-->
                 <ul class="nav navbar-nav" style="font-size:medium;">
-                    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("ADMINISTRATORS")) || User.IsInRole("MANAGERS"))
+                    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("ADMINISTRATORS")))
                     {
                         @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
@@ -46,6 +46,14 @@
                         <li><a asp-area="" asp-controller="LabSafety" asp-action="Index">Lab Safety</a></li>
                         <li><a asp-area="" asp-controller="Inventories" asp-action="Index">Inventory</a></li>
                         <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">User Control</a></li>
+                    }
+                    else if (SignInManager.IsSignedIn(User) && User.IsInRole("MANAGERS"))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="ContactForms" asp-action="Index">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Request" asp-action="Index">Lab Requests</a></li>
+                        <li><a asp-area="" asp-controller="LabSafety" asp-action="Index">Lab Safety</a></li>
+                        <li><a asp-area="" asp-controller="Inventories" asp-action="Index">Inventory</a></li>
                     }
                     else if (SignInManager.IsSignedIn(User) && User.IsInRole("USERS"))
                     {

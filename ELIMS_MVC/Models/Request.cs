@@ -47,12 +47,12 @@ namespace ELIMS_MVC.Models
 
         [Display(Name = "First Name")]
         [Required]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string LastName { get; set; }
 
         [Display(Name = "Email")]
@@ -61,21 +61,21 @@ namespace ELIMS_MVC.Models
         public string NAUEmail { get; set; }
 
         [Display(Name = "Project Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         public string ProjectName { get; set; }
 
         [Display(Name = "Project Objective")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         public string ProjectObjective { get; set; }
 
         [Display(Name = "Contact Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string ContactName { get; set; }
 
         public string Funding { get; set; }
 
         [Display(Name = "Sponsor Name")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string SponsorName { get; set; }
 
         [Display(Name = "Sponsor Phone #")]

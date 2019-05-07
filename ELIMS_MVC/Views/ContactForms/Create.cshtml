@@ -1,5 +1,6 @@
 ﻿@model ELIMS_MVC.Models.ContactForm
 
+
 @{
     ViewData["Title"] = "Contact Us";
 }
@@ -58,60 +59,57 @@
         </address>
     </div>
     <div class="col-md-8">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CFirstName" class="control-label"></label>
-                <input asp-for="CFirstName" class="form-control" />
-                <span asp-validation-for="CFirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CLastName" class="control-label"></label>
-                <input asp-for="CLastName" class="form-control" />
-                <span asp-validation-for="CLastName" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                    <label asp-for="UserId" class="control-label"></label>
-                    <input asp-for="UserId" class="form-control" />
-                    <span asp-validation-for="UserId" class="text-danger"></span>
-                </div>*@
-            <div class="form-group">
-                <label asp-for="CEmail" class="control-label"></label>
-                <input asp-for="CEmail" class="form-control" />
-                <span asp-validation-for="CEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Topic" class="control-label"></label>
-                <select asp-for="Topic" class="form-control" id="Topic">
-                    <option>Other</option>
-                    <option>General question</option>
-                    <option>Question about ELIMS</option>
-                    <option>Question about ENE Lab</option>
-                    <option>Question about a lab usage request</option>
-                    <option>Problem with the inventory</option>
-                    <option>Reporting problem</option>
-                </select>
-                <!--<input asp-for="Topic" class="form-control" /> -->
-                <span asp-validation-for="Topic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <textarea asp-for="Message" class="form-control" id="Message"></textarea>
-                <!--  <input asp-for="Message" class="form-control" /> -->
-                <span asp-validation-for="Message" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" aria-label="Submit contact form request"><b>Submit</b></button>
-            </div>
-        </form>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CFirstName" class="control-label"></label>
+                    <input asp-for="CFirstName" class="form-control" placeholder="Carmen"/>
+                    <span asp-validation-for="CFirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CLastName" class="control-label"></label>
+                    <input asp-for="CLastName" class="form-control" placeholder="Sandiego"/>
+                    <span asp-validation-for="CLastName" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="UserId" class="control-label"></label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="CEmail" class="control-label"></label>
+                    <input asp-for="CEmail" class="form-control" placeholder="blacksheep@vile.com" />
+                    <span asp-validation-for="CEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic" class="control-label"></label>
+                    <select asp-for="Topic" class="form-control" id="Topic">
+                        <option>Other</option>
+                        <option>General question</option>
+                        <option>Question about ELIMS</option>
+                        <option>Question about ENE Lab</option>
+                        <option>Question about a lab usage request</option>
+                        <option>Problem with the inventory</option>
+                        <option>Reporting problem</option>
+                    </select>
+                    <!--<input asp-for="Topic" class="form-control" /> -->
+                    <span asp-validation-for="Topic" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message" class="control-label"></label>
+                    <textarea asp-for="Message" class="form-control" id="Message" placeholder="Enter your message here and then click submit"></textarea>
+                    <!--  <input asp-for="Message" class="form-control" /> -->
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" aria-label="Submit contact form request"><b>Submit</b></button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
-</div>
 
-
-
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

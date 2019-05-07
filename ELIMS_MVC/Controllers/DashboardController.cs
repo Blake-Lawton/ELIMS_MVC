@@ -47,13 +47,6 @@ namespace ELIMS_MVC.Controllers
             return View(await users.ToListAsync());
         }
 
-        // GET: Dashboard/Create
-        [Authorize]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // GET: Delete
         public async Task<IActionResult> Delete(string id)
         {
@@ -79,17 +72,19 @@ namespace ELIMS_MVC.Controllers
         }
 
         // POST: Delete
-        public async Task<ActionResult> DeleteConfirmed(string id)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            //var AppUsers = _userManager.Users.ToList();
+
             var user = await _userManager.FindByIdAsync(id);
 
             if(user != null)
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
+                await _userManager.DeleteAsync(user);
             }
 
-            return RedirectToPage("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Edit
@@ -110,9 +105,11 @@ namespace ELIMS_MVC.Controllers
         }
 
         // POST: Edit
-        public async Task<IActionResult> OnPostEdit(string id, [Bind("Id,UserName,FirstName,LastName,Email,PhoneNumber,Status")] ApplicationUser user)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,FirstName,LastName,Email,PhoneNumber,Status, LabAccess")] ApplicationUser user)
         {
-            if (!ModelState.IsValid)
+            if (id != user.Id)
             {
                 return NotFound();
             }
@@ -123,25 +120,50 @@ namespace ELIMS_MVC.Controllers
                 {
                     return NotFound();
                 }
-                else if (user != null)
+
+                var edited_user = await _userManager.FindByIdAsync(id);
+                edited_user.Id = user.Id;
+                edited_user.FirstName = user.FirstName;
+                edited_user.LastName = user.LastName;
+                edited_user.UserName = user.UserName;
+                edited_user.Email = user.Email;
+                edited_user.PhoneNumber = user.PhoneNumber;
+                edited_user.Status = user.Status;
+                edited_user.LabAccess = user.LabAccess;
+
+                if (edited_user.Status == "Lab administrator")
                 {
-                    
-                        var result = await _userManager.UpdateAsync(user);
-                        if (result.Succeeded)
-                        {
-                            return RedirectToAction("Index");
-                        }
-                        else
-                        {
-                            foreach (var error in result.Errors)
-                            {
-                                ModelState.AddModelError(string.Empty, error.Description);
-                            }
-                        }
+                    await _userManager.AddToRoleAsync(edited_user, "ADMINISTRATORS");
+
                 }
+                else if (edited_user.Status == "Student manager" || edited_user.Status =="Lab manager (non-student)")
+                {
+                    await _userManager.AddToRoleAsync(edited_user, "MANAGERS");
+
+                }
+                else if (edited_user.Status == "Student" || edited_user.Status == "Researcher (non-student)")
+                {
+                    await _userManager.AddToRoleAsync(edited_user, "USERS");
+
+                }
+
+                var result = await _userManager.UpdateAsync(edited_user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Index));
+                } else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                }
+
+                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Details

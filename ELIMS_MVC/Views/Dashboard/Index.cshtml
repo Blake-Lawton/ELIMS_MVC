@@ -13,10 +13,6 @@
 <h4>Review and manage ELIMS user accounts</h4>
 <hr />
 
-<p>
-    <a asp-action="Create" class="btn btn-primary" role="button" style="position:absolute;right:5%;">Create New</a>
-</p>
-
 <!--Search the users-->
 <input class="form-control" id="myInput" type="text" placeholder="Search users..." style="width:auto;">
 
@@ -38,7 +34,10 @@
             <th onclick="w3.sortHTML('#userTable','.item', 'td:nth-child(4)')" style="cursor:pointer">
                 @Html.DisplayNameFor(model => model.Email) <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
             </th>
-            <th onclick="w3.sortHTML('#userTable','.item', 'td:nth-child(5)')" style="cursor:pointer">
+            <th>
+                @Html.DisplayNameFor(model => model.LabAccess)
+            </th>
+            <th onclick="w3.sortHTML('#userTable','.item', 'td:nth-child(6)')" style="cursor:pointer">
                 @Html.DisplayNameFor(model => model.Status) <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
             </th>
             <th></th>
@@ -47,24 +46,25 @@
     <tbody id="myTable">
         @foreach (var item in Model)
         {
-            <tr class="item">
+        <tr class="item">
 
-                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                <td>
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.LabAccess)</td>
+            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+            <td>
 
-                    <a asp-controller="Dashboard" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <text> | </text>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <text> | </text>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Dashboard" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <text> | </text>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <text> | </text>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
 
-                </td>
+            </td>
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>

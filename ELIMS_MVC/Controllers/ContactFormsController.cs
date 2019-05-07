@@ -111,50 +111,28 @@ namespace ELIMS_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CFirstName,CLastName,UserId,CEmail,Topic,Message,ContactDate")] ContactForm contactForm)
         {
-            var autoEmail = new MimeMessage();
-            autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
-            autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
-            //Lab instructor emails
-            // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
-            // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
-            autoEmail.Subject = "ELIMS Contact Notification";
-            autoEmail.Body = new TextPart("plain")
-            {
-                Text = @"You have recieved a contact information form from the ELIMS webpage. Please click this link to manage: https://elims.azurewebsites.net/ContactForms. Do not reply to this email."
-            };
+            //var autoEmail = new MimeMessage();
+            //autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
+            //autoEmail.To.Add(new MailboxAddress("bsb232@nau.edu"));
+            ////Lab instructor emails
+            //// autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
+            //// autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
+            //autoEmail.Subject = "ELIMS Contact Notification";
+            //autoEmail.Body = new TextPart("plain")
+            //{
+            //    Text = @"You have recieved a contact information form from the ELIMS webpage. Please click this link to manage: https://elims.azurewebsites.net/ContactForms. Do not reply to this email."
+            //};
 
-            using (var client = new SmtpClient())
-            {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            //using (var client = new SmtpClient())
+            //{
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
+            //    client.Connect("smtp.gmail.com", 587, false);
+            //    client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
+            //    client.Send(autoEmail);
+            //    client.Disconnect(true);
+            //}
 
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
-                client.Send(autoEmail);
-                client.Disconnect(true);
-            }
-
-            autoEmail.From.Add(new MailboxAddress("donotreplyelims@gmail.com"));
-            autoEmail.To.Add(new MailboxAddress(contactForm.CEmail));
-            //Lab instructor emails
-            // autoEmail.To.Add(new MailboxAddress("terry.baxter@nau.edu"));
-            // autoEmail.To.Add(new MailboxAddress("adam.bringhurst@nau.edu"));
-            autoEmail.Subject = "ELIMS Contact Notification";
-            autoEmail.Body = new TextPart("plain")
-            {
-                Text = @"Thank you for submitting a contact request! Lab Management should be contacting you shortly.  Please do not reply to this email."
-            };
-
-            using (var client = new SmtpClient())
-            {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
-                client.Send(autoEmail);
-                client.Disconnect(true);
-            }
 
             if (ModelState.IsValid)
             {

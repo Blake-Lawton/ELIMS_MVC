@@ -28,7 +28,7 @@ namespace ELIMS_MVC.Controllers
             _userManager = userManager;
         }
 
-        // GET: Inventories
+        // GET: Inventories, main page that lists the whole inventory
         public async Task<IActionResult> Index(string search)
         {
 
@@ -41,7 +41,6 @@ namespace ELIMS_MVC.Controllers
                 items = items.Where(s => s.Name.Contains(search));
             }
 
-            //return View(await _context.Inventory.ToListAsync());
             return View(await items.ToListAsync());
         }
 
@@ -91,7 +90,6 @@ namespace ELIMS_MVC.Controllers
             //using (var client = new SmtpClient())
             //{
             //    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
 
             //    client.Connect("smtp.gmail.com", 587, false);
             //    client.Authenticate("donotreplyelims@gmail.com", "NAULabs123");
@@ -188,11 +186,13 @@ namespace ELIMS_MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Check if inventory entry exists
         private bool InventoryExists(int id)
         {
             return _context.Inventory.Any(e => e.Id == id);
         }
 
+        // Works w/ search
         [HttpPost]
         public string Index(string search, bool notUsed)
         {

@@ -1,4 +1,6 @@
 ﻿@model ELIMS_MVC.Models.Request
+@inject UserManager<ApplicationUser> UserManager
+
 
 @{
     ViewData["Title"] = "Create";
@@ -9,146 +11,148 @@
 <p>Use this form to submit your lab usage request. Please make sure to correctly fill in all fields correctly, and include any relevant information you think we may need to know. This form will be reviewed by Lab Management, who will contact you to set up a face-to-face meeting to discuss your project's needs.</p>
 <p>Make sure to submit the form <u>NO LESS than 2 weeks PRIOR to the project's intended start date.</u></p>
 
-<fieldset id="requestform" style="display:block">
-    <legend><b>Request Form</b></legend>
+<fieldset id="requestform" style="display:block; margin: 0 2px; border:1px solid #c0c0c0; padding: .35em .625em .75em;">
+    <legend style="background-color: #4BB721; display:table; max-width:100%; padding: 3px 6px; color:#fff; white-space:normal;"><b>New Request Form</b></legend>
     <div class="row">
         <div class="col-md-8">
             <form asp-action="Create">
                 <h3>Your Information</h3>
-                
+
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
                     <label asp-for="FirstName" class="control-label">First Name</label>
-                    <input asp-for="FirstName" class="form-control" />
+                    <input asp-for="FirstName" class="form-control" placeholder="Carmen"/>
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="LastName" class="control-label">Last Name</label>
-                    <input asp-for="LastName" class="form-control" />
+                    <input asp-for="LastName" class="form-control" placeholder="Sandiego" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="NAUEmail" class="control-label">Email</label>
-                    <input asp-for="NAUEmail" class="form-control" />
+                    <input asp-for="NAUEmail" class="form-control" placeholder="blacksheep@vile.com" />
                     <span asp-validation-for="NAUEmail" class="text-danger"></span>
                 </div>
-                
+
                 <br />
-                
+
                 <h3>Project Information</h3>
-                
+
                 <div class="form-group">
                     <label asp-for="ProjectName" class="control-label">Project Name</label>
-                    <input asp-for="ProjectName" class="form-control" />
+                    <input asp-for="ProjectName" class="form-control" placeholder="Ex: The Sticky Rice Caper"/>
                     <span asp-validation-for="ProjectName" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="ProjectObjective" class="control-label">Project Objective</label>
-                    <input asp-for="ProjectObjective" class="form-control" aria-describedby="objectiveHelp" />
+                    <input asp-for="ProjectObjective" class="form-control" aria-describedby="objectiveHelp" placeholder="To stop VILE from contaminating the world's rice supply"/>
                     <span asp-validation-for="ProjectObjective" class="text-danger"></span>
                     <small id="contactNameHelp" class="form-text text-muted">Briefly describe the objective of your project.</small>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="StartDate" class="control-label"> Start Date</label>
-                    <input asp-for="StartDate" class="form-control" />
+                    <input asp-for="StartDate" class="form-control" aria-describedby="startDateHelp" />
                     <span asp-validation-for="StartDate" class="text-danger"></span>
+                    <small id="startDateHelp" class="form-text text-muted">Must be before project end date</small>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="EndDate" class="control-label">End Date</label>
-                    <input asp-for="EndDate" class="form-control" />
+                    <input asp-for="EndDate" class="form-control" aria-describedby="endDateHelp" />
                     <span asp-validation-for="EndDate" class="text-danger"></span>
+                    <small id="endDateHelp" class="form-text text-muted">Must be after project start date</small>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="ContactName" class="control-label">Primary Contact</label>
-                    <input asp-for="ContactName" class="form-control" aria-describedby="contactNameHelp" />
+                    <input asp-for="ContactName" class="form-control" aria-describedby="contactNameHelp" placeholder="Inspector Chase Devineaux" />
                     <span asp-validation-for="ContactName" class="text-danger"></span>
                     <small id="contactNameHelp" class="form-text text-muted">Who is the primary contact for the project? If you are the primary contact, leave this blank.</small>
                 </div>
-                                
+
                 <div class="form-group">
                     <label asp-for="Funding" class="control-label">Source of Project Funding</label>
-                    <input asp-for="Funding" class="form-control" aria-describedby="fundingHelp"/>
+                    <input asp-for="Funding" class="form-control" aria-describedby="fundingHelp" placeholder="Questionable sources" />
                     <span asp-validation-for="Funding" class="text-danger"></span>
                     <small id="fundingHelp" class="form-text text-muted">If you are a student doing research for a class, please enter the name of the course.</small>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="SponsorName" class="control-label">Faculty Sponsor</label>
-                    <input asp-for="SponsorName" class="form-control" />
+                    <input asp-for="SponsorName" class="form-control" placeholder="Shadowsan"/>
                     <span asp-validation-for="SponsorName" class="text-danger" aria-describedby="sponsorHelp"></span>
                     <small id="sponsorHelp" class="form-text text-muted">If you are a student doing research for a class, please enter your instructor's name.</small>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="SponsorPhone" class="control-label">Sponsor Phone</label>
-                    <input asp-for="SponsorPhone" class="form-control" />
+                    <input asp-for="SponsorPhone" class="form-control" placeholder="(123) 456-7890"  />
                     <span asp-validation-for="SponsorPhone" class="text-danger"></span>
                 </div>
-                
+
                 <div class="form-group">
                     <label asp-for="SponsorEmail" class="control-label">Sponsor Email</label>
-                    <input asp-for="SponsorEmail" class="form-control" />
+                    <input asp-for="SponsorEmail" class="form-control" placeholder="shadowsan@vile.com"/>
                     <span asp-validation-for="SponsorEmail" class="text-danger"></span>
                 </div>
-                
+
                 <br />
-                
+
                 <p>If you know what chemicals your project will be using, list them here.</p>
-                
+
                 <div class="form-group">
                     <label asp-for="Chemicals" class="control-label">Chemicals Used</label>
-                    <textarea asp-for="Chemicals" class="form-control" id="Chemicals"></textarea>
+                    <textarea asp-for="Chemicals" class="form-control" id="Chemicals" placeholder="You can enter the chemicals you'll be using as a list separated by commas (A, B, C, ...), or as a new chemical on each line"></textarea>
                     <span asp-validation-for="Chemicals" class="text-danger"></span>
                 </div>
-                
+
                 <br />
-                
+
                 <p>You will need to meet face-to-face with Lab Management for your request to be approved. What are some good times before the start of your project that you can meet?</p>
-                
+
                 <div class="form-group">
                     <label asp-for="MeetingTimes" class="control-label">Potential Meeting Times</label>
-                    <textarea asp-for="MeetingTimes" class="form-control" id="MeetingTimes"></textarea>
+                    <textarea asp-for="MeetingTimes" class="form-control" id="MeetingTimes" placeholder="You can enter the meeting times you're proposing as a list separated by commas (A, B, C, ...), or as a new time on each line"></textarea>
                     <span asp-validation-for="MeetingTimes" class="text-danger"></span>
                 </div>
-                
+
                 <br />
-                
+
                 <p>Please list all people who will be working on the project and will need lab access (names and NAU IDs).</p>
-                
+
                 <div class="form-group">
                     <label asp-for="GroupMembers" class="control-label">Group Members</label>
-                    <textarea asp-for="GroupMembers" class="form-control" id="GroupMembers"></textarea>
+                    <textarea asp-for="GroupMembers" class="form-control" id="GroupMembers" placeholder="You can enter the group members on the project as a list separated by commas (A, B, C, ...), or as a new person on each line"></textarea>
                     <span asp-validation-for="GroupMembers" class="text-danger"></span>
                 </div>
 
                 <br />
-                
+
                 @*<div class="form-group">
-                    <label asp-for="ProjectFile" class="control-label">If you have a project file, please attach it now.</label>
-                    <input asp-for="ProjectFile" type="file" class="form-control-file" />
-                </div>
-                
-                <br />*@
-                
+                        <label asp-for="ProjectFile" class="control-label">If you have a project file, please attach it now.</label>
+                        <input asp-for="ProjectFile" type="file" class="form-control-file" />
+                    </div>
+
+                    <br />*@
+
                 <p>Once you submit this form, Lab Management will review your request and reach out to you shortly. Please verify all project information is accurate before submitting. In the case corrections need to be made to your lab usage request, you can manage your requests or contact lab management. </p>
-                
+
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary"><b>Submit Request</b></button>
+                    <button type="submit" class="btn btn-success"><b>Submit Request</b></button>
                 </div>
-            
+
             </form>
         </div>
     </div>
-   </fieldset>
+</fieldset>
 
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

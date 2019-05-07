@@ -5,126 +5,148 @@
 }
 
 <h2>Details</h2>
+<hr />
 
-    <div>
-        <h4>Inventory</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CASNum)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CASNum)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Manufacturer)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.HasMSDS)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.HasMSDS)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.HealthHazard)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.HealthHazard)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.FlammableHazard)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.FlammableHazard)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.ReactiveHazard)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.ReactiveHazard)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.OtherHazard)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.OtherHazard)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CurrentQty)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CurrentQty)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Unit)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Unit)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.DateReceived)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.DateReceived)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IsCheckedOut)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.IsCheckedOut)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCheckedOut)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.DateCheckedOut)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.DateReturned)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.DateReturned)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Location)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Location)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Consumed)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Consumed)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.HazWaste)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.HazWaste)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Disposed)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Disposed)
-            </dd>
-        </dl>
-    </div>
-    <div>
+<div>
+    <fieldset id="deleterequest" style="display:block; margin: 0 2px; border:1px solid #c0c0c0; padding: .35em .625em .75em;">
+        <legend style="background-color: #4BB721; display:table; max-width:100%; padding: 3px 6px; color:#fff; white-space:normal;"><b>Details</b></legend>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Name)</b>
+                    </td>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.CASNum)</b>
+                    </td>
 
-        <a asp-page="/Inventories/Edit" asp-route-id="@Model.Id">Edit</a>
-        <text> | </text>
+                    <td>@Html.DisplayFor(model => model.CASNum)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Manufacturer)</b>
+                    </td>
 
-        <a asp-action="Index">Back to List</a>
+                    <td>@Html.DisplayFor(model => model.Manufacturer)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.HasMSDS)</b>
+                    </td>
 
-    </div>
+                    <td>@Html.DisplayFor(model => model.HasMSDS)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.HealthHazard)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.HealthHazard)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.FlammableHazard)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.FlammableHazard)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.ReactiveHazard)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.ReactiveHazard)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.OtherHazard)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.OtherHazard)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.CurrentQty)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.CurrentQty)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Unit)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.Unit)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.DateReceived)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.DateReceived)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.IsCheckedOut)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.IsCheckedOut)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.DateCheckedOut)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.DateCheckedOut)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.DateReturned)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.DateReturned)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Location)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.Location)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Consumed)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.Consumed)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.HazWaste)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.HazWaste)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>@Html.DisplayNameFor(model => model.Disposed)</b>
+                    </td>
+
+                    <td>@Html.DisplayFor(model => model.Disposed)</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div class="form-group">
+            <a class="btn btn-success" href="/Inventories/Index" role="button">Back to list</a>
+        </div>
+
+    </fieldset>
+</div>

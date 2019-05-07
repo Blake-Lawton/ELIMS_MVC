@@ -1,64 +1,87 @@
 ﻿@model ELIMS_MVC.Models.ContactForm
 
+
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Message";
 }
 
-<h2>Delete</h2>
+<h2>@ViewData["Title"]</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <hr />
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ContactDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CFirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CFirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CLastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CLastName)
-        </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.CEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Topic)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Topic)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Message)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Message)
-        </dd>
-    </dl>
+<fieldset id="deleterequest" style="display:block; margin: 0 2px; border:1px solid #c0c0c0; padding: .35em .625em .75em;">
+    <legend style="background-color: #4BB721; display:table; max-width:100%; padding: 3px 6px; color:#fff; white-space:normal;"><b>Are you sure you want to delete this message?</b></legend>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.ContactDate)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ContactDate)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.CFirstName)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CFirstName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.CLastName)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CLastName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.CEmail)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CEmail)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.Topic)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Topic)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </b>
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Message)
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        @*<input type="hidden" asp-for="Id" />*@
         <input type="submit" value="Delete" class="btn btn-danger" /> <br />
     </form>
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
-</div>
+</fieldset>

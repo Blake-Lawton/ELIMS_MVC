@@ -23,12 +23,12 @@ namespace ELIMS_MVC.Models
 
         [Display(Name = "First Name")]
         [Required]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string CFirstName { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        //[RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string CLastName { get; set; }
 
         [Display(Name = "Email")]
